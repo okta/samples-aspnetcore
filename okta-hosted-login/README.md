@@ -1,7 +1,6 @@
-# ASP.NET Core MVC & Okta-Hosted Login Page Example
+# ASP.NET Core & Okta-Hosted Login Page Example
 
-This example shows you how to use the [OIDC Middleware Library] to login a user.  The login is achieved through the [Authorization Code Flow], where the user is redirected to the Okta-Hosted login page.  After the user authenticates, they are redirected back to the application. ASP.NET Core automatically populates `HttpContext.User` with the information Okta sends back about the user.
-
+This example shows you how to use the Okta.AspNetCore library to log in a user. The user's browser is first redirected to the Okta-hosted login page. After the user authenticates, they are redirected back to your application. ASP.NET Core automatically populates `HttpContext.User` with the information Okta sends back about the user.
 
 ## Prerequisites
 
@@ -13,7 +12,7 @@ Before running this sample, you will need the following:
 
 ## Running This Example
 
-Clone this repo and replace the okta configuration placeholders in the `Web.Config` with your configuration values from the Okta Developer Console. 
+Clone this repo and replace the okta configuration placeholders in the `appsettings.json` with your configuration values from the Okta Developer Console. 
 You can see all the available configuration options in the [okta-aspnet GitHub](https://github.com/okta/okta-aspnet/blob/master/README.md).
 For step-by-step instructions, visit the Okta [ASP.NET MVC quickstart]. The quickstart will guide you through adding Okta login to your ASP.NET application.
 
