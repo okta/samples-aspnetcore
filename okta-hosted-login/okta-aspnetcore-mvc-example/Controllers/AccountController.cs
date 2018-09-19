@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
+using Okta.AspNetCore;
 
 namespace okta_aspnetcore_mvc_example.Controllers
 {
@@ -10,7 +10,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
         {
             if (!HttpContext.User.Identity.IsAuthenticated)
             {
-                return Challenge(OpenIdConnectDefaults.AuthenticationScheme);
+                return Challenge(OktaDefaults.MvcAuthenticationScheme);
             }
 
             return RedirectToAction("Index", "Home");
@@ -19,7 +19,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
         [HttpPost]
         public IActionResult Logout()
         {
-            return new SignOutResult(new[] { OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme });
+            return new SignOutResult(new[] { OktaDefaults.MvcAuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme });
         }
     }
 }
