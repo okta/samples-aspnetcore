@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
@@ -13,19 +12,22 @@ namespace okta_aspnetcore_webapi_example.Controllers
     {
         [HttpGet]
         [Route("~/api/messages")]
-        public IEnumerable<dynamic> Get()
+        public JsonResult Get()
         {
             var principal = HttpContext.User.Identity as ClaimsIdentity;
 
             var login = principal.Claims
                 .SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
                 ?.Value;
-
-            return new dynamic[]
+            
+            return Json( new
             {
-                new { Date = DateTime.Now, Text = "I am a Robot." },
-                new { Date = DateTime.Now, Text = "Hello, world!" },
-            };
+                messages = new dynamic[]
+                {
+                    new { Date = DateTime.Now, Text = "I am a Robot." },
+                    new { Date = DateTime.Now, Text = "Hello, world!" },
+                }
+            });
         }
     }
 }
