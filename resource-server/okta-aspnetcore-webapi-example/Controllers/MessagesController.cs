@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace okta_aspnetcore_webapi_example.Controllers
@@ -12,6 +13,7 @@ namespace okta_aspnetcore_webapi_example.Controllers
     {
         [HttpGet]
         [Route("~/api/messages")]
+        [EnableCors("AllowAll")]
         public JsonResult Get()
         {
             var principal = HttpContext.User.Identity as ClaimsIdentity;

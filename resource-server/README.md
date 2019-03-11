@@ -15,6 +15,8 @@ Before running this sample, you will need the following:
   * [Okta React Sample Apps][]
   * [Okta Vue Sample Apps][]
 
+*Note:* This sample is pre-configured with an open CORS policy to make it easy to test with frontend projects.
+
 A typical resource-server requires a frontend and a backend application, so you will need to start each process:
 
 ## Running This Example
