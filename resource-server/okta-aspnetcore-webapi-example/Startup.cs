@@ -26,7 +26,9 @@ namespace okta_aspnetcore_webapi_example
                 // The CORS policy is open for testing purposes. In a production application, you should restrict it to known origins.
                 options.AddPolicy(
                     "AllowAll",
-                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().SetIsOriginAllowedToAllowWildcardSubdomains());
+                    builder => builder.AllowAnyOrigin()
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader());
             });
             services.AddAuthentication(options =>
             {
@@ -50,7 +52,6 @@ namespace okta_aspnetcore_webapi_example
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("AllowAll");
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication();
