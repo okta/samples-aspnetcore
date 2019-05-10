@@ -1,21 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Okta.AspNetCore;
-using okta_aspnetcore_mvc_example.Models;
 
+#pragma warning disable SA1300 // Element should begin with upper-case letter
 namespace okta_aspnetcore_mvc_example.Controllers
+#pragma warning restore SA1300 // Element should begin with upper-case letter
 {
     public class AccountController : Controller
     {
-        private OktaSettings _oktaSettings;
-
-        public AccountController(IOptions<OktaSettings> oktaSettings)
-        {
-            _oktaSettings = oktaSettings.Value;
-        }
-
         public IActionResult Login()
         {
             return View();
@@ -29,7 +22,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
             {
                 var properties = new AuthenticationProperties();
                 properties.Items.Add("sessionToken", sessionToken);
-                properties.RedirectUri = "/Home/About";
+                properties.RedirectUri = "/Home/";
 
                 return Challenge(properties, OktaDefaults.MvcAuthenticationScheme);
             }
@@ -40,7 +33,13 @@ namespace okta_aspnetcore_mvc_example.Controllers
         [HttpPost]
         public IActionResult Logout()
         {
-            return new SignOutResult(new[] { CookieAuthenticationDefaults.AuthenticationScheme, OktaDefaults.MvcAuthenticationScheme });
+            return new SignOutResult(
+                new[]
+                {
+                     OktaDefaults.MvcAuthenticationScheme,
+                     CookieAuthenticationDefaults.AuthenticationScheme,
+                },
+                new AuthenticationProperties { RedirectUri = "/Home/" });
         }
     }
 }
