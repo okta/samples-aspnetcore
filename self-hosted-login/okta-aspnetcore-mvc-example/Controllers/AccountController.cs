@@ -9,14 +9,14 @@ namespace okta_aspnetcore_mvc_example.Controllers
 {
     public class AccountController : Controller
     {
-        public IActionResult Login()
+        public IActionResult SignIn()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login([FromForm]string sessionToken)
+        public IActionResult SignIn([FromForm]string sessionToken)
         {
             if (!HttpContext.User.Identity.IsAuthenticated)
             {
@@ -31,7 +31,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
         }
 
         [HttpPost]
-        public IActionResult Logout()
+        public IActionResult SignOut()
         {
             return new SignOutResult(
                 new[]
