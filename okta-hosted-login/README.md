@@ -23,11 +23,15 @@ Run the example with your preferred tool and write down the port of your web app
 
 #### Run the web application from Visual Studio
 
-If run this project in Visual Studio it will start the web application on ports 5000 for HTTP and 44314 for HTTPS. You can change this configuration in the `launchSettings.json`. 
+If you run this project in Visual Studio it will start the web application on ports 5000 for HTTP and 44314 for HTTPS. You can change this configuration in the `launchSettings.json`. 
 
 #### Run the web application from dotnet CLI
 
 If you run this project via the dotnet CLI it will start the web application on ports 5000 for HTTP and 5001 for HTTPS. You can change this configuration in the `launchSettings.json`. 
+
+Navigate to the folder where the project file is located and type the following:
+
+```dotnet run```
 
 #### Trust the local dev certificate if necessary
 
@@ -37,12 +41,12 @@ This is because ASP.NET Core creates an HTTPS development certificate for you as
 ### Add the correct configuration to the Okta Developer Console (including the port you just found in [Run the web application](#run-the-web-application))
 
 Go to your [Okta Developer Console] and update the following parameters in your Okta Web Application configuration:
-    * **Login redirect URIs**
-    * **Logout redirect URIs**
+* **Login redirect URI** - for example, https://localhost:5001/authorization-code/callback
+* **Logout redirect URI** - for example, https://localhost:5001/signout/callback
 
 For step-by-step instructions, visit the Okta [Sign Users in to Your Web Application guide] which will show you how to sign users in using Okta and, [Sign Users Out guide] which will show you how to sign users out of your app and out of Okta.
 
-### Add that same configuration to the sample's appsettings
+### Add the same configuration to the sample's appsettings
 
 Replace the okta configuration placeholders in the `appsettings.json` with your configuration values from the [Okta Developer Console]. 
 You can see all the available configuration options in the [okta-aspnet GitHub](https://github.com/okta/okta-aspnet/blob/master/README.md).
@@ -61,5 +65,5 @@ You can sign in with the same account that you created when signing up for your 
 [Enforce HTTPS in ASP.NET Core]: https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-2.2&tabs=visual-studio
 [Configuring HTTPS in ASP.NET Core across different platforms]:https://devblogs.microsoft.com/aspnet/configuring-https-in-asp-net-core-across-different-platforms/
 [Sign Users in to Your Web Application guide]: https://developer.okta.com/guides/sign-into-web-app/aspnet/before-you-begin/
-[Sign Users Out guide]: https://developer.okta.com/guides/sign-users-out/aspnet/before-you-begin/
+[Sign Users Out guide]: https://developer.okta.com/guides/sign-users-out/aspnetcore/before-you-begin/
 [Okta Developer Console]: https://login.okta.com
