@@ -56,8 +56,8 @@ For step-by-step instructions, visit the Okta [Protect your API endpoints guide]
 ### Front-end
 
 If you want to use one of our front-end samples, open a new terminal window and run the [front-end sample project of your choice](Prerequisites).  
-Make sure to update the resource server URI configuration to use your configured resource server port (for example `https://localhost:5001`). 
-Once the front-end sample is running, you can navigate to http://localhost:8080 in your browser and log in to the front-end application.  Once logged in, you can navigate to the "Messages" page to see the interaction with the resource server.
+Make sure to update the resource server URI configuration to use your configured resource-server port (for example `https://localhost:5001`). 
+Once the front-end sample is running, you can navigate to `http://localhost:8080` in your browser and sign in to the front-end application.  Once signed in, you can navigate to the "Messages" page to see the interaction with the resource server.
 
 
 [Implicit Flow]: https://developer.okta.com/authentication-guide/implementing-authentication/implicit
@@ -65,7 +65,6 @@ Once the front-end sample is running, you can navigate to http://localhost:8080 
 [Okta Vue Sample Apps]: https://github.com/okta/samples-js-vue
 [Okta React Sample Apps]: https://github.com/okta/samples-js-react
 [OIDC SPA Setup Instructions]: https://developer.okta.com/authentication-guide/implementing-authentication/implicit#1-setting-up-your-application
-[ASP.NET Core Web API quickstart]: https://developer.okta.com/quickstart/#/widget/dotnet/aspnetcore
 [Enforce HTTPS in ASP.NET Core]: https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-2.2&tabs=visual-studio
 [Configuring HTTPS in ASP.NET Core across different platforms]:https://devblogs.microsoft.com/aspnet/configuring-https-in-asp-net-core-across-different-platforms/
 [Protect your API endpoints guide]: https://developer.okta.com/guides/protect-your-api/aspnetcore/before-you-begin/
