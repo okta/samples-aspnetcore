@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace okta_aspnetcore_webapi_example.Controllers
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    [Produces("application/json")]
-    [Authorize]
-    public class MessagesController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MessageController : ControllerBase
     {
+        [Authorize]
         [HttpGet]
         [Route("~/api/messages")]
         [EnableCors("AllowAll")]
@@ -24,12 +25,12 @@ namespace okta_aspnetcore_webapi_example.Controllers
                 .SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
                 ?.Value;
 
-            return Json(new
+            return new JsonResult(new
             {
                 messages = new dynamic[]
                 {
-                    new { Date = DateTime.Now, Text = "I am a Robot." },
-                    new { Date = DateTime.Now, Text = "Hello, world!" },
+                new { Date = DateTime.Now, Text = "I am a Robot." },
+                new { Date = DateTime.Now, Text = "Hello, world!" },
                 },
             });
         }
