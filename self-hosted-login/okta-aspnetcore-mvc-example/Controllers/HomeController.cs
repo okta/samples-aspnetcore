@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using okta_aspnetcore_mvc_example.Models;
 
+#pragma warning disable SA1300 // Element should begin with upper-case letter
 namespace okta_aspnetcore_mvc_example.Controllers
+#pragma warning restore SA1300 // Element should begin with upper-case letter
 {
     public class HomeController : Controller
     {
@@ -12,20 +14,12 @@ namespace okta_aspnetcore_mvc_example.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Privacy()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
