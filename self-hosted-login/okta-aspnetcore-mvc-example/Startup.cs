@@ -31,19 +31,19 @@ namespace okta_aspnetcore_mvc_example
             });
 
             services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OktaDefaults.MvcAuthenticationScheme;
-            })
-            .AddCookie()
-            .AddOktaMvc(new OktaMvcOptions
-            {
-                // Replace these values with your Okta configuration
-                OktaDomain = Configuration.GetValue<string>("Okta:OktaDomain"),
-                ClientId = Configuration.GetValue<string>("Okta:ClientId"),
-                ClientSecret = Configuration.GetValue<string>("Okta:ClientSecret"),
-            });
+                {
+                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie(o => { o.LoginPath = new PathString("/Account/SignIn"); })
+                .AddOktaMvc(new OktaMvcOptions
+                 {
+                     // Replace these values with your Okta configuration
+                     OktaDomain = Configuration.GetValue<string>("Okta:OktaDomain"),
+                     ClientId = Configuration.GetValue<string>("Okta:ClientId"),
+                     ClientSecret = Configuration.GetValue<string>("Okta:ClientSecret"),
+                 });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
