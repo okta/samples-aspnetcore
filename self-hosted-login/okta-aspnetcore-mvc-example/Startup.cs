@@ -34,9 +34,12 @@ namespace okta_aspnetcore_mvc_example
             {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OktaDefaults.MvcAuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
-            .AddCookie()
+            .AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/Account/SignIn");
+            })
             .AddOktaMvc(new OktaMvcOptions
             {
                 // Replace these values with your Okta configuration
