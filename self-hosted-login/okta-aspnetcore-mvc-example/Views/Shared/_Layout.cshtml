@@ -34,10 +34,10 @@
                             <li>
                                 <p class="navbar-text">Hello, @User.Identity.Name</p>
                             </li>
-                            <li><a class="nav-link" asp-controller="Home" asp-action="Profile">Profile</a></li>
+                            <li><a class="nav-link" asp-controller="Home" asp-action="Profile" id="profile-button">Profile</a></li>
                             <li>
                                 <form class="form-inline" asp-controller="Account" asp-action="SignOut" method="post">
-                                    <button type="submit" class="nav-link btn btn-link text-dark">Sign Out</button>
+                                    <button type="submit" class="nav-link btn btn-link text-dark" id="logout-button" id="profile-button">Sign Out</button>
                                 </form>
                             </li>
                         </ul>
@@ -45,7 +45,7 @@
                     else
                     {
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a asp-controller="Account" asp-action="SignIn">Sign In</a></li>
+                            <li><a asp-controller="Account" asp-action="SignIn" id="login-button">Sign In</a></li>
                         </ul>
                     }
                     <ul class="navbar-nav flex-grow-1">
