@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -43,6 +44,7 @@ namespace okta_aspnetcore_mvc_example
                 OktaDomain = Configuration.GetValue<string>("Okta:OktaDomain"),
                 ClientId = Configuration.GetValue<string>("Okta:ClientId"),
                 ClientSecret = Configuration.GetValue<string>("Okta:ClientSecret"),
+                Scope = new List<string> { "openid", "profile", "email" },
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
