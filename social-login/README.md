@@ -1,4 +1,4 @@
-# ASP.NET Core & Social Login Page Example
+# ASP.NET Core & Social Sign-In Page Example
 
 This example shows you how to use the [Okta ASP.NET Core SDK] to sign in a user via other identity providers such as Google or Facebook. The user's browser is first redirected to the self-hosted sign-in page on your ASP.NET Core application with multiple sign-in options. Once the user is successfully authenticated via Okta, ASP.NET Core automatically populates `HttpContext.User` with the information that the identity provider sends back about the user.
 
