@@ -20,7 +20,7 @@ Before running this sample, you will need the following:
 
 Run the example with your preferred tool and write down the port of your web application to configure Okta afterwards.
 
-> **NOTE:** This sample is using ASP.NET Core 2.2 which enforces HTTPS. This is a recommended practice for web applications. Check out [Enforce HTTPS in ASP.NET Core] for more details.
+> **Note:** This sample is using ASP.NET Core 2.2 which enforces HTTPS. This is a recommended practice for web applications. Check out [Enforce HTTPS in ASP.NET Core] for more details.
 
 #### Run the web application from Visual Studio
 
@@ -61,7 +61,7 @@ Click the **Sign In** link in the Home page and it will redirect you to the self
 
 You can sign in with the same account that you created when signing up for your Developer Org, or you can use a known username and password from your Okta Directory.
 
-**Note:** If you are currently using your Developer Console, you already have a Single Sign-On (SSO) session for your Org.  You will be automatically signed into your application as the same user that is using the Developer Console.  You may want to use an incognito tab to test the flow from a blank slate.
+> **Note:** If you are currently using your Developer Console, you already have a Single Sign-On (SSO) session for your Org.  You will be automatically signed into your application as the same user that is using the Developer Console.  You may want to use an incognito tab to test the flow from a blank slate.
 
 [Okta ASP.NET Core SDK]: https://github.com/okta/okta-aspnet
 [OIDC Web Application Setup Instructions]: https://developer.okta.com/authentication-guide/implementing-authentication/auth-code#1-setting-up-your-application
