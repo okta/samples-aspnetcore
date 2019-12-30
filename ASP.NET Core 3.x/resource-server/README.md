@@ -17,7 +17,7 @@ Before running this sample, you will need the following:
 
 *Note:* This sample is pre-configured with an open CORS policy to make it easy to test with frontend projects. Make sure to restrict it to known origins in your production applications.
 
-A typical resource-server requires a frontend and a backend application, so you will need to start each process:
+A typical resource-server requires a frontend and a backend application, so you will need to start each process as described in the next section.
 
 ## Running This Example
 

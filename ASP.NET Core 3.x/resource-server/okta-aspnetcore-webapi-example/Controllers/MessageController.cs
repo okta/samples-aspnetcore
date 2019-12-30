@@ -27,8 +27,8 @@ namespace okta_aspnetcore_webapi_example.Controllers
             {
                 messages = new dynamic[]
                 {
-                new { Date = DateTime.Now, Text = "I am a Robot." },
-                new { Date = DateTime.Now, Text = "Hello, world!" },
+                    new { Date = DateTime.Now, Text = "I am a Robot." },
+                    new { Date = DateTime.Now, Text = "Hello, world!" },
                 },
             });
         }
