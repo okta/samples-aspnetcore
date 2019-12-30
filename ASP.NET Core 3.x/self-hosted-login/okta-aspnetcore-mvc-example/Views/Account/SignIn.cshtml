@@ -13,6 +13,7 @@
 
 <form method="POST" asp-action="SignIn">
     <input type="hidden" name="sessionToken" id="hiddenSessionTokenField" />
+    @Html.AntiForgeryToken()
 </form>
 
 <script type="text/javascript">
