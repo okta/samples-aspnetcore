@@ -1,0 +1,32 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<script src="https://global.oktacdn.com/okta-signin-widget/3.5.0/js/okta-sign-in.min.js" type="text/javascript"></script>
+<link href="https://global.oktacdn.com/okta-signin-widget/3.5.0/css/okta-sign-in.min.css" type="text/css" rel="stylesheet" />
+<h2>Sign In</h2>
+
+<div id="widget"></div>
+
+<form method="POST" asp-action="SignIn">
+    <input type="hidden" name="sessionToken" id="hiddenSessionTokenField" />
+    @Html.AntiForgeryToken()
+</form>
+
+<script type="text/javascript">
+    const signIn = new OktaSignIn({
+        baseUrl: '@Configuration["Okta:OktaDomain"]'
+    });
+
+    signIn.renderEl({ el: '#widget' }, (res) => {
+        var sessionTokenField = $("#hiddenSessionTokenField");
+        sessionTokenField.val(res.session.token);
+        var form = sessionTokenField.parent();
+        form.submit();
+    }, (err) => {
+        console.error(err);
+    });
+</script>
