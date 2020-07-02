@@ -7,6 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Okta.AspNetCore;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using okta_aspnetcore_mvc_example.Models;
 
 namespace okta_aspnetcore_mvc_example
 {
@@ -22,6 +26,7 @@ namespace okta_aspnetcore_mvc_example
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -30,16 +35,28 @@ namespace okta_aspnetcore_mvc_example
            .AddCookie()
            .AddOktaMvc(new OktaMvcOptions
            {
-                // Replace these values with your Okta configuration
-                OktaDomain = Configuration.GetValue<string>("Okta:OktaDomain"),
+               // Replace these values with your Okta configuration
+               OktaDomain = Configuration.GetValue<string>("Okta:OktaDomain"),
                ClientId = Configuration.GetValue<string>("Okta:ClientId"),
                ClientSecret = Configuration.GetValue<string>("Okta:ClientSecret"),
                Scope = new List<string> { "openid", "profile", "email" },
+               OpenIdConnectEvents = new OktaOpenIdConnectEvents
+               {
+                   OnRemoteFailure = OnRemoteFailure   
+               } 
            });
 
             services.AddControllersWithViews();
         }
 
+        public async Task OnRemoteFailure(RemoteFailureContext context)
+        {
+            var model = new RemoteFailureContextModel(context);
+            context.HttpContext.Session.Set("RemoteFailure", model.GetBytes()); // put the model into the session for retrieval by the RemoteFailure view
+            context.Response.Redirect("/Account/RemoteFailure");
+            context.HandleResponse();
+        }
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -53,6 +70,8 @@ namespace okta_aspnetcore_mvc_example
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
