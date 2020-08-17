@@ -21,13 +21,15 @@ Run the example with your preferred tool and write down the port of your web app
 
 > **NOTE:** This sample is using ASP.NET Core 2.2 which enforces HTTPS. This is a recommended practice for web applications. Check out [Enforce HTTPS in ASP.NET Core] for more details.
 
+> Because of recent changes in Set-Cookie behavior (SameSite) this code will only work properly if it's configured to use https.
+
 #### Run the web application from Visual Studio
 
-If you run this project in Visual Studio it will start the web application on ports 5000 for HTTP and 44314 for HTTPS. You can change this configuration in the `launchSettings.json`. 
+If you run this project in Visual Studio it will start the web application on port 44314 and using HTTPS. You can change this configuration in the `launchSettings.json`. 
 
 #### Run the web application from dotnet CLI
 
-If you run this project via the dotnet CLI it will start the web application on ports 5000 for HTTP and 5001 for HTTPS. You can change this configuration in the `launchSettings.json`. 
+If you run this project via the dotnet CLI it will start the web application on ports 5001 and using HTTPS. You can change this configuration in the `launchSettings.json`. 
 
 Navigate to the folder where the project file is located and type the following:
 
