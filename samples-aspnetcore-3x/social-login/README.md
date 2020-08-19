@@ -22,7 +22,7 @@ Run the example with your preferred tool and write down the port of your web app
 
 > **Note:** This sample is using ASP.NET Core 3.1 which enforces HTTPS. This is a recommended practice for web applications. Check out [Enforce HTTPS in ASP.NET Core] for more details.
 
-> Because of recent changes in Set-Cookie behavior (SameSite) this code will only work properly if it's configured to use https. Check out [Work with SameSite cookies in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/security/samesite?view=aspnetcore-3.1) for more details.
+> Because of recent changes in [Set-Cookie behavior (SameSite)](https://web.dev/samesite-cookies-explained) this code will only work properly if it's configured to use https. Check out [Work with SameSite cookies in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/security/samesite?view=aspnetcore-3.1) for more details.
 
 #### Run the web application from Visual Studio
 
