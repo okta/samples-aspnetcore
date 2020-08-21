@@ -60,8 +60,13 @@ namespace okta_aspnetcore_webapi_example
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+
+                // Uncomment the following line when using HTTPS
+                // app.UseHsts();
             }
+
+            // Uncomment the following line when using HTTPS
+            // app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseMvc();
