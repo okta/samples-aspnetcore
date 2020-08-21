@@ -52,8 +52,6 @@ namespace okta_aspnetcore_webapi_example
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseCors("AllowAll");

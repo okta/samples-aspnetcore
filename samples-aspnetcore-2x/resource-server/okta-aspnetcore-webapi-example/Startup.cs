@@ -63,7 +63,6 @@ namespace okta_aspnetcore_webapi_example
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
         }

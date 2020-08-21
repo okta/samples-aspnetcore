@@ -25,6 +25,8 @@ A typical resource-server requires a frontend and a backend application, so you 
 
 Run the example with your preferred tool and write down the port of your Web API application to configure Okta afterwards.
 
+> **NOTE:** Although we highly recommend using HTTPS in production, we are using HTTP here to be compatible with our [SPA samples](#Prerequisites) that expect a protected endpoint on HTTP://localhost:8000/api/messages. 
+
 #### Run the Web API application from Visual Studio
 
 If you run this project in Visual Studio it will start the resource server on port 8000 using HTTP. You can change this configuration in the `launchSettings.json` in the Properties folder.  
