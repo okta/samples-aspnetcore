@@ -22,15 +22,15 @@
         customButtons: [{
                 title: 'Sign in with Facebook',
                 className: 'social-auth-button social-auth-facebook-button link-button',
-                click: function() {
-                    window.location.href = 'https://localhost:44314/Account/SignInWithIdp?idp=@Configuration["okta:FacebookIdp"]';
+                click: function () {
+                    window.location = new URL('/Account/SignInWithIdp?idp=@Configuration["okta:FacebookIdp"]', window.location);
                 }
             },
             {
                 title: 'Sign in with Google',
                 className: 'social-auth-button social-auth-google-button link-button',
                 click: function() {
-                    window.location.href = 'https://localhost:44314/Account/SignInWithIdp?idp=@Configuration["okta:GoogleIdp"]';
+                    window.location.href = new URL('/Account/SignInWithIdp?idp=@Configuration["okta:GoogleIdp"]', window.location);
                 }
             }]
     });
