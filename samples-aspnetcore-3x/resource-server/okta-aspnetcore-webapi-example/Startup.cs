@@ -52,7 +52,8 @@ namespace okta_aspnetcore_webapi_example
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // Uncomment the following line when using HTTPS
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
