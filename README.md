@@ -26,3 +26,4 @@ Please find the sample that fits your use-case from the table below.
 ## Contributing
  
 We're happy to accept contributions and PRs! Please see the [contribution guide](CONTRIBUTING.md) to understand how to structure a contribution.
+
