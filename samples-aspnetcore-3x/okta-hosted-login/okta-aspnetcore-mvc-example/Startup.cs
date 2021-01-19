@@ -37,7 +37,7 @@ namespace okta_aspnetcore_mvc_example
            {
                 // Replace these values with your Okta configuration
                OktaDomain = Configuration.GetValue<string>("Okta:OktaDomain"),
-               AuthorizationServerId = Configuration.GetValue<string>("Okta:AuthorizationServerId", "default"),
+               AuthorizationServerId = Configuration.GetValue<string>("Okta:AuthorizationServerId"),
                ClientId = Configuration.GetValue<string>("Okta:ClientId"),
                ClientSecret = Configuration.GetValue<string>("Okta:ClientSecret"),
                Scope = new List<string> { "openid", "profile", "email" },
