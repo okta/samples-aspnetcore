@@ -7,6 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Okta.AspNetCore;
 using System.Collections.Generic;
+using Okta.Sdk;
+using Okta.Sdk.Configuration;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace okta_aspnetcore_mvc_example
 {
@@ -17,7 +21,14 @@ namespace okta_aspnetcore_mvc_example
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public static IConfiguration Configuration { get; set; }
+
+        private static async Task OnTokenValidatedAsync(TokenValidatedContext context)
+        {
+            ClaimsPrincipal current = context.HttpContext.User;
+            OktaPrincipal oktaPrincipal = new OktaPrincipal(current, Configuration);
+            context.HttpContext.User = oktaPrincipal;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -41,9 +52,10 @@ namespace okta_aspnetcore_mvc_example
                ClientId = Configuration.GetValue<string>("Okta:ClientId"),
                ClientSecret = Configuration.GetValue<string>("Okta:ClientSecret"),
                Scope = new List<string> { "openid", "profile", "email" },
+               OnTokenValidated = OnTokenValidatedAsync
            });
 
-            services.AddControllersWithViews();
+           services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
