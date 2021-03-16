@@ -49,6 +49,6 @@ function cloneRepository(repository, directory) {
 }
 
 // Update the Web.config in the dist directory with your org & webapp details
-updateConfig(path.join(__dirname, '../..', 'okta-hosted-login', '/dist/okta-aspnetcore-mvc-example/appsettings.json'));
+updateConfig(path.join(__dirname, '../..', 'federated-auth', '/dist/okta-aspnetcore-mvc-example/appsettings.json'));
 updateConfig(path.join(__dirname, '../..', 'self-hosted-login', '/dist/okta-aspnetcore-mvc-example/appsettings.json'));
 cloneRepository('https://github.com/okta/okta-oidc-tck.git', 'okta-oidc-tck');

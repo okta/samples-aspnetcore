@@ -3,7 +3,7 @@ call npm install
 call npm run pretest
 
 cd %IIS_EXPRESS_HOME%
-call start iisexpress.exe /path:%SAMPLES_ASPNET_CORE_HOME%\okta-hosted-login\dist\okta-aspnetcore-mvc-example
+call start iisexpress.exe /path:%SAMPLES_ASPNET_CORE_HOME%\federated-auth\dist\okta-aspnetcore-mvc-example
 cd %SAMPLES_ASPNET_CORE_HOME%\e2e-tests
 call npm run test:okta-hosted-login
 if errorlevel 1 (SET error=true)

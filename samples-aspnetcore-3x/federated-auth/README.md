@@ -1,4 +1,6 @@
-# ASP.NET Core & Okta-Hosted Sign-In Page Example
+# ASP.NET Core & Federated Okta-Hosted Sign-In Page Example
+
+:information_source: Federated Okta-Hosted Sign-In is used when you want Okta to handle authentication through its sign in page, hosted in Okta’s ecosystem.
 
 This example shows you how to use the [Okta ASP.NET Core SDK] to sign in a user. The user's browser is first redirected to the Okta-hosted sign-in page. After the user authenticates, they are redirected back to your application. ASP.NET Core automatically populates `HttpContext.User` with the information Okta sends back about the user.
 
