@@ -1,0 +1,9 @@
+﻿@using Okta.AspNetCore
+@using Newtonsoft.Json
+
+@model OktaConfiguration
+
+
+<div>
+    @(JsonConvert.SerializeObject(Model))
+</div>

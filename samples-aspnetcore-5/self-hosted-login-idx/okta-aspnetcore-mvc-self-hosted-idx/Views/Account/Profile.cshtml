@@ -1,0 +1,74 @@
+﻿@using Okta.AspNetCore
+
+@model OktaUserInfo
+
+<h1>Profile</h1>
+<hr />
+<table>
+    <tr>
+        <td>Sub</td>
+        <td>@Model.Sub</td>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <td>Locale</td>
+        <td>@Model.Locale</td>
+    </tr>
+    <tr>
+        <td>Preferred UserName</td>
+        <td>@Model.PreferredUserName</td>
+    </tr>
+    <tr>
+        <td>Given Name</td>
+        <td>@Model.GivenName</td>
+    </tr>
+    <tr>
+        <td>Family Name</td>
+        <td>@Model.FamilyName</td>
+    </tr>
+    <tr>
+        <td>Zone Info</td>
+        <td>@Model.ZoneInfo</td>
+    </tr>
+    <tr>
+        <td>Updated At</td>
+        <td>@Model.UpdatedAt</td>
+    </tr>
+</table>
+
+<hr />
+
+@{
+    OktaIdentity oktaIdentity = User.Identity as OktaIdentity;
+}
+
+<h2>Token Type</h2>
+@oktaIdentity.OktaTokens.TokenType
+
+<h2>Access Token</h2>
+@oktaIdentity.OktaTokens.AccessToken
+
+<h2>Id Token</h2>
+@oktaIdentity.OktaTokens.IdToken
+
+<h2>Refresh Token</h2>
+@oktaIdentity.OktaTokens.RefreshToken
+
+<h2>Scope</h2>
+@oktaIdentity.OktaTokens.Scope
+
+<h2>Expires In</h2>
+@oktaIdentity.OktaTokens.ExpiresIn
+
+<hr />
+<h2>Bearer Token Header</h2>
+@oktaIdentity.BearerToken.Header
+
+<h2>Bearer Token Payload</h2>
+@oktaIdentity.BearerToken.Payload
+
+<h2>Bearer Token Signature</h2>
+@oktaIdentity.BearerToken.Signature

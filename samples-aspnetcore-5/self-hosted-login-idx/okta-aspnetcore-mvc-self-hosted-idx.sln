@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okta-aspnetcore-mvc-self-hosted-idx", "okta-aspnetcore-mvc-self-hosted-idx\okta-aspnetcore-mvc-self-hosted-idx.csproj", "{87D3C676-2388-4BFA-A2B4-D7E707B5D865}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.Idx.Sdk", "submodules\okta-idx-dotnet\src\Okta.Idx.Sdk\Okta.Idx.Sdk.csproj", "{7BA3E1E0-AC43-4249-951D-291F2018870F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okta-aspnetcore-mvc-example", "..\..\samples-aspnetcore-3x\self-hosted-login\okta-aspnetcore-mvc-example\okta-aspnetcore-mvc-example.csproj", "{B2A2B000-EB39-4F00-A35F-924F51242FD2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.Sdk.Abstractions", "submodules\okta-sdk-abstractions-dotnet\src\Okta.Sdk.Abstractions\Okta.Sdk.Abstractions.csproj", "{0501EDFA-F9A0-4A3D-893B-E5CC46C4155F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetCore", "AspNetCore", "{19D9F9BF-3008-4660-BE9E-0079B2E58DF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.AspNet.Abstractions", "submodules\okta-aspnet\Okta.AspNet.Abstractions\Okta.AspNet.Abstractions.csproj", "{28A705C1-0005-4CEF-9620-FBC64588DFD6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.AspNetCore", "submodules\okta-aspnet\Okta.AspNetCore\Okta.AspNetCore.csproj", "{07699645-D746-4E04-8A43-F2CB4393BAEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sdk", "Sdk", "{87BB8D77-FF17-4FCD-BD0C-F7C350554331}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87D3C676-2388-4BFA-A2B4-D7E707B5D865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87D3C676-2388-4BFA-A2B4-D7E707B5D865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87D3C676-2388-4BFA-A2B4-D7E707B5D865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87D3C676-2388-4BFA-A2B4-D7E707B5D865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BA3E1E0-AC43-4249-951D-291F2018870F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BA3E1E0-AC43-4249-951D-291F2018870F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BA3E1E0-AC43-4249-951D-291F2018870F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BA3E1E0-AC43-4249-951D-291F2018870F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2A2B000-EB39-4F00-A35F-924F51242FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A2B000-EB39-4F00-A35F-924F51242FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A2B000-EB39-4F00-A35F-924F51242FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A2B000-EB39-4F00-A35F-924F51242FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0501EDFA-F9A0-4A3D-893B-E5CC46C4155F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0501EDFA-F9A0-4A3D-893B-E5CC46C4155F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0501EDFA-F9A0-4A3D-893B-E5CC46C4155F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0501EDFA-F9A0-4A3D-893B-E5CC46C4155F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28A705C1-0005-4CEF-9620-FBC64588DFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28A705C1-0005-4CEF-9620-FBC64588DFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28A705C1-0005-4CEF-9620-FBC64588DFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28A705C1-0005-4CEF-9620-FBC64588DFD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07699645-D746-4E04-8A43-F2CB4393BAEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07699645-D746-4E04-8A43-F2CB4393BAEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07699645-D746-4E04-8A43-F2CB4393BAEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07699645-D746-4E04-8A43-F2CB4393BAEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{87D3C676-2388-4BFA-A2B4-D7E707B5D865} = {19D9F9BF-3008-4660-BE9E-0079B2E58DF7}
+		{7BA3E1E0-AC43-4249-951D-291F2018870F} = {87BB8D77-FF17-4FCD-BD0C-F7C350554331}
+		{B2A2B000-EB39-4F00-A35F-924F51242FD2} = {19D9F9BF-3008-4660-BE9E-0079B2E58DF7}
+		{0501EDFA-F9A0-4A3D-893B-E5CC46C4155F} = {87BB8D77-FF17-4FCD-BD0C-F7C350554331}
+		{28A705C1-0005-4CEF-9620-FBC64588DFD6} = {19D9F9BF-3008-4660-BE9E-0079B2E58DF7}
+		{07699645-D746-4E04-8A43-F2CB4393BAEB} = {19D9F9BF-3008-4660-BE9E-0079B2E58DF7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0DEC2A0-32EA-444B-90D9-20E4663440CE}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,120 @@
+{
+    "version": "1.0.0",
+    "stateHandle": "02l9li6MIYcZeWtCrpkEB1yXDlHLPVkPWxhSPG_4-L",
+    "expiresAt": "2021-04-10T05:17:13+00:00",
+    "intent": "LOGIN",
+    "remediation": {
+        "type": "array",
+        "value": [
+            {
+                "rel": [
+                    "create-form"
+                ],
+                "name": "identify",
+                "href": "https://oie-ux-ciam2.trexcloud.com/idp/idx/identify",
+                "method": "POST",
+                "produces": "application/ion+json; okta-version=1.0.0",
+                "value": [
+                    {
+                        "name": "identifier",
+                        "label": "Username"
+                    },
+                    {
+                        "name": "credentials",
+                        "type": "object",
+                        "form": {
+                            "value": [
+                                {
+                                    "name": "passcode",
+                                    "label": "Password",
+                                    "secret": true
+                                }
+                            ]
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "rememberMe",
+                        "type": "boolean",
+                        "label": "Remember this device"
+                    },
+                    {
+                        "name": "stateHandle",
+                        "required": true,
+                        "value": "02l9li6MIYcZeWtCrpkEB1yXDlHLPVkPWxhSPG_4-L",
+                        "visible": false,
+                        "mutable": false
+                    }
+                ],
+                "accepts": "application/json; okta-version=1.0.0"
+            }
+        ]
+    },
+    "currentAuthenticator": {
+        "type": "object",
+        "value": {
+            "recover": {
+                "rel": [
+                    "create-form"
+                ],
+                "name": "recover",
+                "href": "https://oie-ux-ciam2.trexcloud.com/idp/idx/recover",
+                "method": "POST",
+                "produces": "application/ion+json; okta-version=1.0.0",
+                "value": [
+                    {
+                        "name": "stateHandle",
+                        "required": true,
+                        "value": "02l9li6MIYcZeWtCrpkEB1yXDlHLPVkPWxhSPG_4-L",
+                        "visible": false,
+                        "mutable": false
+                    }
+                ],
+                "accepts": "application/json; okta-version=1.0.0"
+            },
+            "type": "password",
+            "key": "okta_password",
+            "id": "aut7nscm6wkVSqzR50w6",
+            "displayName": "Password",
+            "methods": [
+                {
+                    "type": "password"
+                }
+            ]
+        }
+    },
+    "cancel": {
+        "rel": [
+            "create-form"
+        ],
+        "name": "cancel",
+        "href": "https://oie-ux-ciam2.trexcloud.com/idp/idx/cancel",
+        "method": "POST",
+        "produces": "application/ion+json; okta-version=1.0.0",
+        "value": [
+            {
+                "name": "stateHandle",
+                "required": true,
+                "value": "02l9li6MIYcZeWtCrpkEB1yXDlHLPVkPWxhSPG_4-L",
+                "visible": false,
+                "mutable": false
+            }
+        ],
+        "accepts": "application/json; okta-version=1.0.0"
+    },
+    "app": {
+        "type": "object",
+        "value": {
+            "name": "oidc_client",
+            "label": "Bryan Apellanes Test App",
+            "id": "0oa7nzi4cOv2fpVNV0w6",
+            "logo": {
+                "rel": [
+                    "icon"
+                ],
+                "href": "https://tc2static.oktacdn.com/fs/bcg/4/gfs7nzwkzEeVnLWwv0w6",
+                "alt": "Logo for the app"
+            }
+        }
+    }
+}

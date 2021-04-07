@@ -1,0 +1,15 @@
+[submodule "samples-aspnetcore-5/self-hosted-login-idx/submodules/okta-auth-js"]
+	path = samples-aspnetcore-5/self-hosted-login-idx/submodules/okta-auth-js
+	url = https://github.com/okta/okta-auth-js.git
+[submodule "samples-aspnetcore-5/self-hosted-login-idx/submodules/okta-signin-widget"]
+	path = samples-aspnetcore-5/self-hosted-login-idx/submodules/okta-signin-widget
+	url = https://github.com/okta/okta-signin-widget.git
+[submodule "samples-aspnetcore-5/self-hosted-login-idx/submodules/okta-idx-dotnet"]
+	path = samples-aspnetcore-5/self-hosted-login-idx/submodules/okta-idx-dotnet
+	url = https://github.com/okta/okta-idx-dotnet.git
+[submodule "samples-aspnetcore-5/self-hosted-login-idx/submodules/okta-sdk-abstractions-dotnet"]
+	path = samples-aspnetcore-5/self-hosted-login-idx/submodules/okta-sdk-abstractions-dotnet
+	url = https://github.com/okta/okta-sdk-abstractions-dotnet.git
+[submodule "samples-aspnetcore-5/self-hosted-login-idx/submodules/okta-aspnet"]
+	path = samples-aspnetcore-5/self-hosted-login-idx/submodules/okta-aspnet
+	url = https://github.com/okta/okta-aspnet.git
