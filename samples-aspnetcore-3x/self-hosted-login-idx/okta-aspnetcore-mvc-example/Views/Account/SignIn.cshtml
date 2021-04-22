@@ -1,0 +1,40 @@
+﻿@using okta_aspnetcore_mvc_example.Okta
+
+@model OktaSignInWidgetConfiguration
+
+
+@section head
+{
+    <script src="https://global.oktacdn.com/okta-signin-widget/@(Model.Version)/js/okta-sign-in.min.js" type="text/javascript"></script>
+    <link href="https://global.oktacdn.com/okta-signin-widget/@(Model.Version)/css/okta-sign-in.min.css" type="text/css" rel="stylesheet" />
+}
+
+<div id="okta-signin-widget-container"></div>
+<script type="text/javascript">
+    const widgetConfig = {
+        "version": "@Model.Version",
+        "baseUrl": "@Model.BaseUrl",
+        "clientId": "@Model.ClientId",
+        "redirectUri": "@Model.RedirectUri",
+        "authParams": {
+            "issuer": "@Model.AuthParams.Issuer",
+            "scopes": [
+                "openid",
+                "profile"
+            ]
+        },
+        "useInteractionCodeFlow": true,
+        "state": "@Model.State",
+        "interactionHandle": "@Model.InteractionHandle",
+        "codeChallenge": "@Model.CodeChallenge",
+        "codeChallengeMethod": "@Model.CodeChallengeMethod"
+    };
+    const signIn = new OktaSignIn({
+        el: '#okta-signin-widget-container',
+        ...widgetConfig
+    });
+    signIn.showSignInAndRedirect()
+        .catch(err => {
+            console.log('Error happen in showSignInAndRedirect: ', err);
+        });
+</script>
