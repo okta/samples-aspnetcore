@@ -14,10 +14,6 @@ namespace okta_social_login_example.Okta
 
         Task<SocialLoginSettings> StartSocialLoginAsync(ISession session, string state = null, CancellationToken cancellationToken = default);
 
-        Task<string> GetIdpUrlAsync(IdxContext idxContext, string idpId);
-
         Task<OktaTokens> RedeemInteractionCodeAsync(IdxContext idxContext, string interactionCode, Action<Exception> exceptionHandler = null, CancellationToken cancellationToken = default);
-
-        Task<OktaUserInfo> GetUserInfoAsync(string accessToken, CancellationToken cancellationToken = default);
     }
 }

@@ -22,11 +22,13 @@ namespace okta_social_login_example.Controllers
     public class InteractionCodeController : Controller
     {
         private readonly ISocialLoginIdxClient idxClient;
+        private readonly IInteractionRequiredHandler interactionRequiredHandler;
         private readonly ILogger<InteractionCodeController> logger;        
 
-        public InteractionCodeController(ISocialLoginIdxClient idxClient, ILogger<InteractionCodeController> logger)
+        public InteractionCodeController(ISocialLoginIdxClient idxClient, IInteractionRequiredHandler interactionRequiredHandler, ILogger<InteractionCodeController> logger)
         {
             this.idxClient = idxClient;
+            this.interactionRequiredHandler = interactionRequiredHandler;
             this.logger = logger;
         }
 
@@ -40,7 +42,7 @@ namespace okta_social_login_example.Controllers
 
             if ("interaction_required".Equals(error))
             {
-                return View("SignInWidget", new OktaSignInWidgetConfiguration(idxClient.Configuration, idxContext));
+                return await interactionRequiredHandler.HandleInteractionRequired(this, idxClient, idxContext, new ErrorViewModel { Error = error, ErrorDescription = errorDescription });
             }
 
             if (!string.IsNullOrEmpty(error))
@@ -71,12 +73,13 @@ namespace okta_social_login_example.Controllers
                 }
                 else
                 {
-                    OktaUserInfo oktaUserInfo = await idxClient.GetUserInfoAsync(tokens.AccessToken);
-
+                    BearerToken bearerToken = new BearerToken(tokens.AccessToken);
+                    Dictionary<string, object> claims = bearerToken.GetClaims();
                     var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                    identity.AddClaim(new Claim(ClaimTypes.Name, oktaUserInfo.PreferredUserName));
-                    identity.AddClaim(new Claim(ClaimTypes.GivenName, oktaUserInfo.Name));
-                    identity.AddClaim(new Claim(ClaimTypes.Surname, oktaUserInfo.FamilyName));
+                    foreach(string claimType in claims.Keys)
+                    {
+                        identity.AddClaim(new Claim(claimType, claims[claimType]?.ToString()));
+                    }
 
                     var principal = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);

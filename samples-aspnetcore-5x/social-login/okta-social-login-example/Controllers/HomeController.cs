@@ -29,13 +29,6 @@ namespace okta_social_login_example.Controllers
             return View(socialLoginSettings);
         }
 
-        public async Task<IActionResult> SignInWithIdp(string state, string idpId)
-        {
-            IdxContext idxContext = HttpContext.Session.GetIdxContext(state);
-            string url = await this._idxClient.GetIdpUrlAsync(idxContext, idpId);
-            return Redirect(url);
-        }
-
         public async Task<IActionResult> Profile()
         {
             return View(HttpContext.User.Claims.ToArray());

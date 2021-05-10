@@ -36,6 +36,12 @@ namespace okta_social_login_example.Okta
             });
         }
 
+        public static void UseInteractionRequiredHandler<T>(this IServiceCollection services)
+            where T : class, IInteractionRequiredHandler
+        {
+            services.AddSingleton<IInteractionRequiredHandler, T>();
+        }
+
         public static void UseOktaIdentityEngine(this IApplicationBuilder applicationBuilder, bool useSession = false)
         {
             if(useSession)

@@ -32,6 +32,7 @@ namespace okta_social_login_example
                 .AddCookie();
 
             services.AddOktaIdentityEngine<ISocialLoginIdxClient, SocialLoginIdxClient>(true);
+            services.UseInteractionRequiredHandler<ErrorViewInteractionRequiredHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

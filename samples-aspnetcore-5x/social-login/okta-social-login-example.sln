@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.Idx.Sdk", "..\..\submo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okta-social-login-example", "okta-social-login-example\okta-social-login-example.csproj", "{B5B6AD8C-C07C-4C7F-AF22-9CB98402415C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.Idx.Sdk.UnitTests", "..\..\submodules\okta-idx-dotnet\src\Okta.Idx.Sdk.UnitTests\Okta.Idx.Sdk.UnitTests.csproj", "{EB3245D9-0658-487C-9879-2AE32F00B5F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B5B6AD8C-C07C-4C7F-AF22-9CB98402415C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5B6AD8C-C07C-4C7F-AF22-9CB98402415C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5B6AD8C-C07C-4C7F-AF22-9CB98402415C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB3245D9-0658-487C-9879-2AE32F00B5F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB3245D9-0658-487C-9879-2AE32F00B5F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB3245D9-0658-487C-9879-2AE32F00B5F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB3245D9-0658-487C-9879-2AE32F00B5F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

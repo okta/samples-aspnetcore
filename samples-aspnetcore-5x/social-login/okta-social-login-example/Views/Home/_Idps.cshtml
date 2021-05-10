@@ -10,7 +10,7 @@ else
 {
     @foreach (IdpOption idpOption in Model)
     {
-    <a class="btn btn-primary" href="/Home/SignInWithIdp?state=@idpOption.State&idpId=@idpOption.Id">
+    <a class="btn btn-primary" href="@idpOption.Href">
         Sign in with @(idpOption.Name)
     </a>
     }

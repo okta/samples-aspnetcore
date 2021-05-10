@@ -57,7 +57,7 @@ namespace okta_social_login_example.Okta
                 Context = idxContext,
                 IdpOptions = introspectResponse.Remediation?.RemediationOptions?
                     .Where(remediationOption => remediationOption.Name.Equals("redirect-idp"))
-                    .Select(remediationOption => new IdpOption { State = idxContext.State, InteractionHandle = idxContext.InteractionHandle, Id = remediationOption.Idp.Id, Name = remediationOption.Idp.Name })
+                    .Select(remediationOption => new IdpOption { State = idxContext.State, InteractionHandle = idxContext.InteractionHandle, Id = remediationOption.Idp.Id, Name = remediationOption.Idp.Name, Href = remediationOption.Href })
                     .ToArray(),
                 Client = this,
                 Configuration = this.Configuration,
@@ -68,15 +68,6 @@ namespace okta_social_login_example.Okta
             session.SetString(idxContext.State, contextJson);
 
             return socialLoginSettings;
-        }
-
-        public async Task<string> GetIdpUrlAsync(IdxContext idxContext, string idpId)
-        {
-            IIdxResponse introspectResponse = await this.IntrospectAsync(idxContext.InteractionHandle);
-            return introspectResponse.Remediation?.RemediationOptions?
-                .Where(remediationOption => remediationOption.Name.Equals("redirect-idp") && (bool)remediationOption.Idp?.Id?.Equals(idpId))
-                .Select(remediationOption => remediationOption.Href)
-                .FirstOrDefault();
         }
 
         public async Task<OktaTokens> RedeemInteractionCodeAsync(IdxContext idxContext, string interactionCode, Action<Exception> exceptionHandler = null, CancellationToken cancellationToken = default)
@@ -116,29 +107,6 @@ namespace okta_social_login_example.Okta
                 exceptionHandler(new RedeemInteractionCodeException(exception));
             }
             return null;
-        }
-
-        public async Task<OktaUserInfo> GetUserInfoAsync(string accessToken, CancellationToken cancellationToken = default)
-        {
-            Uri issuerUri = new Uri(Configuration.Issuer);
-            Uri userInfoUri = new Uri(GetNormalizedUriString(issuerUri.ToString(), "v1/userinfo"));
-
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, userInfoUri);
-            httpRequestMessage.Headers.Add("Accept", "application/json");
-            httpRequestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
-            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
-            string userJson = await httpResponseMessage.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<OktaUserInfo>(userJson);
-        }
-
-        protected async Task<IdpOption[]> GetIdpOptions(IdxContext idxContext)
-        {
-            IIdxResponse introspectResponse = await this.IntrospectAsync(idxContext);
-
-            return introspectResponse.Remediation?.RemediationOptions?
-                        .Where(remediationOption => remediationOption.Name.Equals("redirect-idp"))
-                        .Select(remediationOption => new IdpOption { Id = remediationOption.Idp.Id, Name = remediationOption.Idp.Name })
-                        .ToArray();
         }
 
         protected virtual void LogError(Exception ex)
