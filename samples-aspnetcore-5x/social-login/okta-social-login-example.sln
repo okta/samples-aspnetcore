@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.Idx.Sdk", "..\..\submodules\okta-idx-dotnet\src\Okta.Idx.Sdk\Okta.Idx.Sdk.csproj", "{0C3D4D9E-DA56-41E4-9787-DA87C392C03D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okta-social-login-example", "okta-social-login-example\okta-social-login-example.csproj", "{B5B6AD8C-C07C-4C7F-AF22-9CB98402415C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C3D4D9E-DA56-41E4-9787-DA87C392C03D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C3D4D9E-DA56-41E4-9787-DA87C392C03D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C3D4D9E-DA56-41E4-9787-DA87C392C03D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C3D4D9E-DA56-41E4-9787-DA87C392C03D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5B6AD8C-C07C-4C7F-AF22-9CB98402415C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5B6AD8C-C07C-4C7F-AF22-9CB98402415C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5B6AD8C-C07C-4C7F-AF22-9CB98402415C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5B6AD8C-C07C-4C7F-AF22-9CB98402415C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FD21E7AA-0000-4CE8-BB50-623F6B7CB3AE}
+	EndGlobalSection
+EndGlobal

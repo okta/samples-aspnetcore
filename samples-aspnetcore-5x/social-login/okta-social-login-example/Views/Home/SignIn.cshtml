@@ -1,0 +1,41 @@
+﻿@using Okta.Idx.Sdk
+@using Newtonsoft.Json
+
+@model SignInModel
+
+@{
+    ViewData["Title"] = "Sign-In";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sign In</h1>
+
+@await Html.PartialAsync("_Idps", Model.SocialLoginSettings.IdpOptions)
+
+
+@section head
+{
+    <script src="https://global.oktacdn.com/okta-signin-widget/@(Model.WidgetConfiguration.Version)/js/okta-sign-in.min.js" type="text/javascript"></script>
+    <link href="https://global.oktacdn.com/okta-signin-widget/@(Model.WidgetConfiguration.Version)/css/okta-sign-in.min.css" type="text/css" rel="stylesheet" />
+}
+
+@if (Model.Debug)
+{
+    <hr />
+
+    <h1>Sign In Widget For Reference</h1>
+
+
+    <div id="okta-signin-widget-container"></div>
+    <script type="text/javascript">
+    const widgetConfig = @Html.Raw(JsonConvert.SerializeObject(Model.WidgetConfiguration));
+    const signIn = new OktaSignIn({
+        el: '#okta-signin-widget-container',
+        ...widgetConfig
+    });
+    signIn.showSignInAndRedirect()
+        .catch(err => {
+            console.log('Error happen in showSignInAndRedirect: ', err);
+        });
+    </script>
+}

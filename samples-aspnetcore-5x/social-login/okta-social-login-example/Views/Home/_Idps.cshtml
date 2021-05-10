@@ -1,0 +1,17 @@
+﻿@using Okta.Idx.Sdk
+
+@model IdpOption[]
+
+@if (Model.Length == 0)
+{
+    <span>This Okta application has no idenity providers configured, please check with your Okta administrator.</span>
+}
+else
+{
+    @foreach (IdpOption idpOption in Model)
+    {
+    <a class="btn btn-primary" href="/Home/SignInWithIdp?state=@idpOption.State&idpId=@idpOption.Id">
+        Sign in with @(idpOption.Name)
+    </a>
+    }
+}
