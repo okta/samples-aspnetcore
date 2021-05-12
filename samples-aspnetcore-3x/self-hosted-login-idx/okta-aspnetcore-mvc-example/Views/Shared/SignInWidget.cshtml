@@ -1,0 +1,26 @@
+﻿@using Newtonsoft.Json
+@using Okta.Idx.Sdk
+
+@model SignInWidgetConfiguration
+
+@section head
+{
+    <script src="https://global.oktacdn.com/okta-signin-widget/@(Model.Version)/js/okta-sign-in.min.js" type="text/javascript"></script>
+    <link href="https://global.oktacdn.com/okta-signin-widget/@(Model.Version)/css/okta-sign-in.min.css" type="text/css" rel="stylesheet" />
+}
+
+<div id="okta-signin-widget-container"></div>
+<script type="text/javascript">
+    const widgetConfig = @Html.Raw(JsonConvert.SerializeObject(Model));
+
+    console.log(widgetConfig.interactionHandle);
+
+    const signIn = new OktaSignIn({
+        el: '#okta-signin-widget-container',
+        ...widgetConfig
+    });
+    signIn.showSignInAndRedirect()
+        .catch(err => {
+            console.log('Error happen in showSignInAndRedirect: ', err);
+        });
+</script>

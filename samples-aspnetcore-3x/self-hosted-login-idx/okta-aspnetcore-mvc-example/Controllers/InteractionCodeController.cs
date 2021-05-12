@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Okta.Idx.Sdk;
 using Okta.Idx.Sdk.Configuration;
@@ -20,128 +21,88 @@ namespace okta_aspnetcore_mvc_example.Controllers
     public class InteractionCodeController : Controller
     {
         private readonly IIdxClient idxClient;
-        private readonly HttpClient httpClient;
+        private readonly IInteractionRequiredHandler interactionRequiredHandler;
+        private readonly ILogger<InteractionCodeController> logger;
 
-        public InteractionCodeController(IIdxClient idxClient)
+        public InteractionCodeController(IIdxClient idxClient, IInteractionRequiredHandler interactionRequiredHandler, ILogger<InteractionCodeController> logger)
         {
             this.idxClient = idxClient;
-            this.httpClient = new HttpClient();
+            this.interactionRequiredHandler = interactionRequiredHandler;
+            this.logger = logger;
         }
 
-        public async Task<IActionResult> Callback()
+        public async Task<IActionResult> Callback(
+            [FromQuery(Name = "state")] string state = null,
+            [FromQuery(Name = "interaction_code")] string interactionCode = null,
+            [FromQuery(Name = "error")] string error = null,
+            [FromQuery(Name = "error_description")] string errorDescription = null)
         {
-            await GetTokensAsync(HttpContext);
-            return Redirect("/Account/Profile");
+            IdxContext idxContext = HttpContext.Session.GetIdxContext(state);
+
+            if ("interaction_required".Equals(error))
+            {
+                return await interactionRequiredHandler.HandleInteractionRequired(this, idxClient, idxContext, new ErrorViewModel { Error = error, ErrorDescription = errorDescription });
+            }
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                return View("Error", new ErrorViewModel { Error = error, ErrorDescription = errorDescription });
+            }
+
+            if (string.IsNullOrEmpty(interactionCode))
+            {
+                return View("Error", new ErrorViewModel { Error = "null_interaction_code", ErrorDescription = "interaction_code was not specified" });
+            }
+
+            await RedeemInteractionCodeAndSignInAsync(idxContext, interactionCode);
+            return Redirect("/Home/Profile");
         }
 
-        private async Task GetTokensAsync(HttpContext httpContext)
+        private async Task RedeemInteractionCodeAndSignInAsync(IdxContext idxContext, string interactionCode)
         {
             try
             {
-                IdxConfiguration idxConfiguration = idxClient.Configuration;
+                OktaTokens tokens = await idxClient.RedeemInteractionCodeAsync(idxContext, interactionCode, HandleException);
 
-                string state = httpContext.Request.Query["state"];
-                string idxContextJson = httpContext.Session.GetString(state);
-
-                Dictionary<string, string> idxContext = JsonConvert.DeserializeObject<Dictionary<string, string>>(idxContextJson);
-
-                string interactionCode = httpContext.Request.Query["interaction_code"];
-                Uri issuerUri = new Uri(idxConfiguration.Issuer);
-                string domain = issuerUri.Authority;
-                Uri tokenUri = new Uri(GetNormalizedUriString(issuerUri.ToString(), "v1/token")); 
-                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, tokenUri);
-
-                StringBuilder requestContent = new StringBuilder();
-                this.AddParameter(requestContent, "grant_type", "interaction_code", false);
-                this.AddParameter(requestContent, "client_id", idxConfiguration.ClientId, true);
-                if (!string.IsNullOrEmpty(idxConfiguration.ClientSecret))
+                if (tokens == null)
                 {
-                    this.AddParameter(requestContent, "client_secret", idxConfiguration.ClientSecret, true);
-                }
-
-                this.AddParameter(requestContent, "interaction_code", interactionCode, true);
-                this.AddParameter(requestContent, "code_verifier", idxContext["CodeVerifier"], true);
-
-                requestMessage.Content = new StringContent(requestContent.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
-                requestMessage.Headers.Add("Accept", "application/json");
-                HttpResponseMessage responseMessage = await this.httpClient.SendAsync(requestMessage);
-                string tokenResponseJson = await responseMessage.Content.ReadAsStringAsync();
-                if (!responseMessage.IsSuccessStatusCode)
-                {
-                    httpContext.Response.Redirect("/");
+                    // if the tokens object is null, our exception handler (HandleException) should have executed.
+                    // The line below is included for completeness.
+                    HttpContext.Response.Redirect("/");
                 }
                 else
                 {
-                    OktaTokens tokens = JsonConvert.DeserializeObject<OktaTokens>(tokenResponseJson);
-                    string oktaUserInfoJson = await GetUserInfoJsonAsync(idxConfiguration, tokens.AccessToken);
-                    OktaUserInfo oktaUserInfo = JsonConvert.DeserializeObject<OktaUserInfo>(oktaUserInfoJson);
-
-                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                    identity.AddClaim(new Claim(ClaimTypes.Name, oktaUserInfo.PreferredUserName));
-                    identity.AddClaim(new Claim(ClaimTypes.GivenName, oktaUserInfo.Name));
-                    identity.AddClaim(new Claim(ClaimTypes.Surname, oktaUserInfo.FamilyName));
-                    
-                    var principal = new ClaimsPrincipal(identity);
-                    await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                    ClaimsPrincipal principal = GetClaimsPrincipal(tokens);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 }
-
-                await Task.CompletedTask;
             }
             catch (Exception ex)
             {
-                httpContext.Response.Redirect("/");
+                logger.LogError(ex, ex.Message);
+                HttpContext.Response.Redirect("/");
             }
         }
 
-        internal static async Task<string> GetUserInfoJsonAsync(IdxConfiguration idxConfiguration, string accessToken)
+        private static ClaimsPrincipal GetClaimsPrincipal(OktaTokens tokens)
         {
-            HttpClient httpClient = new HttpClient();
-            Uri issuerUri = new Uri(idxConfiguration.Issuer);
-            Uri userInfoUri = new Uri(GetNormalizedUriString(issuerUri.ToString(), "v1/userinfo"));
+            BearerToken bearerToken = new BearerToken(tokens.AccessToken);
+            Dictionary<string, object> claims = bearerToken.GetClaims();
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            foreach (string claimType in claims.Keys)
+            {
+                identity.AddClaim(new Claim(claimType, claims[claimType]?.ToString()));
+            }
 
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, userInfoUri);
-            httpRequestMessage.Headers.Add("Accept", "application/json");
-            httpRequestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
-            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
-            return await httpResponseMessage.Content.ReadAsStringAsync();
+            var principal = new ClaimsPrincipal(identity);
+            return principal;
         }
 
-        private void AddParameter(StringBuilder stringBuilder, string key, string value, bool ampersandPrefix = false)
+        private void HandleException(Exception ex)
         {
-            if (ampersandPrefix)
-            {
-                stringBuilder.Append("&");
-            }
+            logger.LogError(ex, ex.Message);
 
-            stringBuilder.Append($"{key}={value}");
-        }
-
-        private static string GetNormalizedUriString(string issuer, string resourceUri)
-        {
-            string normalized = issuer;
-            if (IsRootOrgIssuer(issuer))
-            {
-                normalized = Path.Combine(normalized, "oauth2", resourceUri);
-            }
-            else
-            {
-                normalized = Path.Combine(normalized, resourceUri);
-            }
-            return normalized;
-        }
-
-        private static bool IsRootOrgIssuer(string issuerUri)
-        {
-            string path = new Uri(issuerUri).AbsolutePath;
-            string[] splitUri = path.Split("/", StringSplitOptions.RemoveEmptyEntries);
-            if(splitUri.Length >= 2 &&
-            "oauth2".Equals(splitUri[0]) &&
-            !string.IsNullOrEmpty(splitUri[1]))
-            {
-                return false;
-            }
-
-            return true;
+            // provide exception handling appropriate to your application
+            HttpContext.Response.Redirect("/");
         }
     }
 }

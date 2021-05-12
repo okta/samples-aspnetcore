@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Okta.Idx.Sdk;
 using okta_aspnetcore_mvc_example.Okta;
+using System;
 using System.Threading.Tasks;
 
 namespace okta_aspnetcore_mvc_example.Controllers
@@ -17,12 +18,10 @@ namespace okta_aspnetcore_mvc_example.Controllers
             this.idxClient = idxClient;
         }
 
-        public async Task<IActionResult> SignIn()
+        public async Task<IActionResult> SignInWidget()
         {
-            IIdxContext idxContext = await this.idxClient.InteractAsync();
-            string idxContextJson = JsonConvert.SerializeObject(idxContext);
-            HttpContext.Session.SetString(idxContext.State, idxContextJson);
-            return View(new OktaSignInWidgetConfiguration(idxClient.Configuration, idxContext));
+            SignInWidgetConfiguration signInWidgetConfiguration = await HttpContext.StartWidgetSignInAsync(idxClient);
+            return View(signInWidgetConfiguration);
         }
 
         public async Task<IActionResult> Profile()
