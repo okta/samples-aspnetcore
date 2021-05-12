@@ -6,12 +6,15 @@ using Okta.Idx.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace okta_social_login_example.Okta
 {
     public static class SocialLoginExtensions
     {
+        public const string IdxStateKey = "IdxStateHandle";
+
         public static void AddOktaIdentityEngine<I, T>(this IServiceCollection services, bool addSession = false)
             where I : class, IIdxClient
             where T : class, I
@@ -59,7 +62,7 @@ namespace okta_social_login_example.Okta
 
         public static IdxContext GetIdxContext(this ISession session)
         {
-            string stateHandle = session.GetString(SocialLoginIdxClient.IdxStateKey);
+            string stateHandle = session.GetString(IdxStateKey);
             return GetIdxContext(session, stateHandle);
         }
 
@@ -68,6 +71,23 @@ namespace okta_social_login_example.Okta
             string idxContextJson = session.GetString(stateHandle);
             IdxContext idxContext = JsonConvert.DeserializeObject<IdxContext>(idxContextJson);
             return idxContext;
+        }
+
+        public static async Task<SocialLoginResponse> StartSocialLoginAsync(this IIdxClient idxClient, HttpContext httpContext, string state = null, CancellationToken cancellationToken = default)
+        {
+            return await StartSocialLoginAsync(idxClient, httpContext.Session, state, cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public static async Task<SocialLoginResponse> StartSocialLoginAsync(this IIdxClient idxClient, ISession session, string state = null, CancellationToken cancellationToken = default)
+        {
+            var socialLoginSettings = await idxClient.StartSocialLoginAsync(state, cancellationToken);
+
+            session.SetString(IdxStateKey, socialLoginSettings.Context.State);
+            string contextJson = JsonConvert.SerializeObject(socialLoginSettings.Context);
+            session.SetString(socialLoginSettings.Context.State, contextJson);
+
+            return socialLoginSettings;
         }
     }
 }

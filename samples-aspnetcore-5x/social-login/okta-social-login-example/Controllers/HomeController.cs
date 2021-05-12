@@ -15,9 +15,9 @@ namespace okta_social_login_example.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ISocialLoginIdxClient _idxClient;
+        private readonly IIdxClient _idxClient;
 
-        public HomeController(ISocialLoginIdxClient idxClient, ILogger<HomeController> logger)
+        public HomeController(IIdxClient idxClient, ILogger<HomeController> logger)
         {
             _logger = logger;
             _idxClient = idxClient;
@@ -25,7 +25,7 @@ namespace okta_social_login_example.Controllers
 
         public async Task<IActionResult> SocialSignIn()
         {
-            SocialLoginSettings socialLoginSettings = await this._idxClient.StartSocialLoginAsync(HttpContext);
+            SocialLoginResponse socialLoginSettings = await this._idxClient.StartSocialLoginAsync(HttpContext);
             return View(socialLoginSettings);
         }
 

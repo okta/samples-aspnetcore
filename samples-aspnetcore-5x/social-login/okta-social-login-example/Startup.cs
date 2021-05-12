@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Okta.Idx.Sdk;
 using okta_social_login_example.Okta;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,8 @@ namespace okta_social_login_example
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
 
-            services.AddOktaIdentityEngine<ISocialLoginIdxClient, SocialLoginIdxClient>(true);
-            services.UseInteractionRequiredHandler<ErrorViewInteractionRequiredHandler>();
+            services.AddOktaIdentityEngine<IIdxClient, IdxClient>(true);
+            services.UseInteractionRequiredHandler<SignInWidgetViewInteractionRequiredHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

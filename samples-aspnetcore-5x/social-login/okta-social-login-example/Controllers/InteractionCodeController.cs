@@ -21,11 +21,11 @@ namespace okta_social_login_example.Controllers
 {
     public class InteractionCodeController : Controller
     {
-        private readonly ISocialLoginIdxClient idxClient;
+        private readonly IIdxClient idxClient;
         private readonly IInteractionRequiredHandler interactionRequiredHandler;
         private readonly ILogger<InteractionCodeController> logger;        
 
-        public InteractionCodeController(ISocialLoginIdxClient idxClient, IInteractionRequiredHandler interactionRequiredHandler, ILogger<InteractionCodeController> logger)
+        public InteractionCodeController(IIdxClient idxClient, IInteractionRequiredHandler interactionRequiredHandler, ILogger<InteractionCodeController> logger)
         {
             this.idxClient = idxClient;
             this.interactionRequiredHandler = interactionRequiredHandler;

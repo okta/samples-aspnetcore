@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okta-social-login-example",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.Idx.Sdk.UnitTests", "..\..\submodules\okta-idx-dotnet\src\Okta.Idx.Sdk.UnitTests\Okta.Idx.Sdk.UnitTests.csproj", "{EB3245D9-0658-487C-9879-2AE32F00B5F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "direct-auth", "..\..\submodules\okta-idx-dotnet\src\direct-auth\direct-auth.csproj", "{8E2D53A6-B343-4F3F-A326-AF03FEBB49B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{EB3245D9-0658-487C-9879-2AE32F00B5F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB3245D9-0658-487C-9879-2AE32F00B5F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB3245D9-0658-487C-9879-2AE32F00B5F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E2D53A6-B343-4F3F-A326-AF03FEBB49B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E2D53A6-B343-4F3F-A326-AF03FEBB49B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E2D53A6-B343-4F3F-A326-AF03FEBB49B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2D53A6-B343-4F3F-A326-AF03FEBB49B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
