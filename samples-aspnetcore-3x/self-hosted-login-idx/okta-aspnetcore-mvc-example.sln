@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okta-aspnetcore-mvc-example
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.Idx.Sdk", "..\..\submodules\okta-idx-dotnet\src\Okta.Idx.Sdk\Okta.Idx.Sdk.csproj", "{D288EE9A-2029-4C43-B137-0981D7C19E16}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.Idx.Sdk.UnitTests", "..\..\submodules\okta-idx-dotnet\src\Okta.Idx.Sdk.UnitTests\Okta.Idx.Sdk.UnitTests.csproj", "{6003E4D5-B9E2-4D47-AC9A-157A04E26EFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D288EE9A-2029-4C43-B137-0981D7C19E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D288EE9A-2029-4C43-B137-0981D7C19E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D288EE9A-2029-4C43-B137-0981D7C19E16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6003E4D5-B9E2-4D47-AC9A-157A04E26EFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6003E4D5-B9E2-4D47-AC9A-157A04E26EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6003E4D5-B9E2-4D47-AC9A-157A04E26EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6003E4D5-B9E2-4D47-AC9A-157A04E26EFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
