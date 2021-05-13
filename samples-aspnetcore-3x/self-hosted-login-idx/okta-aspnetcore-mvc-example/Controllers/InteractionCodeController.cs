@@ -62,7 +62,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
         {
             try
             {
-                OktaTokens tokens = await idxClient.RedeemInteractionCodeAsync(idxContext, interactionCode, HandleException);
+                TokenResponse tokens = await idxClient.RedeemInteractionCodeAsync(idxContext, interactionCode);
 
                 if (tokens == null)
                 {
@@ -78,12 +78,12 @@ namespace okta_aspnetcore_mvc_example.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, ex.Message);
+                HandleException(ex);
                 HttpContext.Response.Redirect("/");
             }
         }
 
-        private static ClaimsPrincipal GetClaimsPrincipal(OktaTokens tokens)
+        private static ClaimsPrincipal GetClaimsPrincipal(TokenResponse tokens)
         {
             BearerToken bearerToken = new BearerToken(tokens.AccessToken);
             Dictionary<string, object> claims = bearerToken.GetClaims();
