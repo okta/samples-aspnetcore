@@ -20,12 +20,14 @@ namespace okta_aspnetcore_mvc_example.Controllers
 {
     public class InteractionCodeController : Controller
     {
+        private readonly HttpClient httpClient;
         private readonly IIdxClient idxClient;
         private readonly IInteractionRequiredHandler interactionRequiredHandler;
         private readonly ILogger<InteractionCodeController> logger;
 
         public InteractionCodeController(IIdxClient idxClient, IInteractionRequiredHandler interactionRequiredHandler, ILogger<InteractionCodeController> logger)
         {
+            this.httpClient = new HttpClient();
             this.idxClient = idxClient;
             this.interactionRequiredHandler = interactionRequiredHandler;
             this.logger = logger;
@@ -72,7 +74,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
                 }
                 else
                 {
-                    ClaimsPrincipal principal = GetClaimsPrincipal(tokens);
+                    ClaimsPrincipal principal = await GetClaimsPrincipalAsync(tokens);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 }
             }
@@ -83,17 +85,12 @@ namespace okta_aspnetcore_mvc_example.Controllers
             }
         }
 
-        private static ClaimsPrincipal GetClaimsPrincipal(TokenResponse tokens)
+        private async Task<ClaimsPrincipal> GetClaimsPrincipalAsync(TokenResponse tokens)
         {
-            BearerToken bearerToken = new BearerToken(tokens.AccessToken);
-            Dictionary<string, object> claims = bearerToken.GetClaims();
-            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            foreach (string claimType in claims.Keys)
-            {
-                identity.AddClaim(new Claim(claimType, claims[claimType]?.ToString()));
-            }
-
-            var principal = new ClaimsPrincipal(identity);
+            UserInfo userInfo = await GetUserInfoAsync(idxClient, tokens.AccessToken);            
+            ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            identity.AddClaims(userInfo.ToClaims());
+            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
             return principal;
         }
 
@@ -103,6 +100,19 @@ namespace okta_aspnetcore_mvc_example.Controllers
 
             // provide exception handling appropriate to your application
             HttpContext.Response.Redirect("/");
+        }
+
+        private async Task<UserInfo> GetUserInfoAsync(IIdxClient idxClient, string accessToken)
+        {
+            IdxConfiguration idxConfiguration = idxClient.Configuration;
+            Uri issuerUri = new Uri(idxConfiguration.Issuer);
+            Uri userInfoUri = new Uri(IdxUrlHelper.GetNormalizedUriString(issuerUri.ToString(), "v1/userinfo"));
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, userInfoUri);
+            requestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
+            HttpResponseMessage responseMessage = await this.httpClient.SendAsync(requestMessage);
+            string userInfoJson = await responseMessage.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<UserInfo>(userInfoJson);
         }
     }
 }

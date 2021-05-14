@@ -34,5 +34,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
             await HttpContext.SignOutAsync();
             return Redirect("/");
         }
+
+
     }
 }
