@@ -89,6 +89,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
             ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             var claims = await GetClaimsFromUserInfoAsync(tokens.AccessToken);
             identity.AddClaims(claims);
+            identity.AddClaim(new Claim("access_token", tokens.AccessToken));
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
             return principal;
         }

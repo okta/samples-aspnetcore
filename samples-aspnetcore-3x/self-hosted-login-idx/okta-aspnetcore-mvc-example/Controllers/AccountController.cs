@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Okta.Idx.Sdk;
 using okta_aspnetcore_mvc_example.Okta;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace okta_aspnetcore_mvc_example.Controllers
@@ -31,6 +32,11 @@ namespace okta_aspnetcore_mvc_example.Controllers
 
         public async Task<IActionResult> SignOut()
         {
+            var accessToken = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "access_token");
+            if(accessToken != null)
+            {
+                await idxClient.RevokeTokensAsync(TokenType.AccessToken, accessToken.Value);
+            }
             await HttpContext.SignOutAsync();
             return Redirect("/");
         }
