@@ -58,7 +58,6 @@ namespace okta_aspnetcore_mvc_example
             services.AddControllersWithViews();
 
             services.AddSingleton<IIdxClient, IdxClient>();
-            services.AddSingleton<IInteractionRequiredHandler, SignInWidgetViewInteractionRequiredHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

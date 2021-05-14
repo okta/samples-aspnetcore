@@ -16,19 +16,18 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Okta.Idx.Sdk;
 
 namespace okta_aspnetcore_mvc_example.Controllers
 {
     public class InteractionCodeController : Controller
     {
         private readonly Idx.IIdxClient idxClient;
-        private readonly ExampleApp.IInteractionRequiredHandler interactionRequiredHandler;
         private readonly ILogger<InteractionCodeController> logger;
 
-        public InteractionCodeController(Idx.IIdxClient idxClient, ExampleApp.IInteractionRequiredHandler interactionRequiredHandler, ILogger<InteractionCodeController> logger)
+        public InteractionCodeController(Idx.IIdxClient idxClient, ILogger<InteractionCodeController> logger)
         {
             this.idxClient = idxClient;
-            this.interactionRequiredHandler = interactionRequiredHandler;
             this.logger = logger;
         }
 
@@ -42,7 +41,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
 
             if ("interaction_required".Equals(error))
             {
-                return await interactionRequiredHandler.HandleInteractionRequired(this, idxClient, idxContext, new ErrorViewModel { Error = error, ErrorDescription = errorDescription });
+                return View("SignInWidget", new SignInWidgetConfiguration(idxClient.Configuration, idxContext));
             }
 
             if (!string.IsNullOrEmpty(error))
