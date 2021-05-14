@@ -4,17 +4,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Idx = Okta.Idx.Sdk;
-using Okta.Idx.Sdk.Configuration;
 using okta_aspnetcore_mvc_example.Models;
 using ExampleApp = okta_aspnetcore_mvc_example.Okta;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Okta.Idx.Sdk;
 

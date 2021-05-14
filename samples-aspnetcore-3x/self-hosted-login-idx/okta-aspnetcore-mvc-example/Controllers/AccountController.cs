@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Okta.Idx.Sdk;
 using okta_aspnetcore_mvc_example.Okta;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -40,7 +38,5 @@ namespace okta_aspnetcore_mvc_example.Controllers
             await HttpContext.SignOutAsync();
             return Redirect("/");
         }
-
-
     }
 }
