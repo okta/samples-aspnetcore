@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Okta.Idx.Sdk;
+using Idx = Okta.Idx.Sdk;
 using Okta.Idx.Sdk.Configuration;
 using okta_aspnetcore_mvc_example.Models;
-using okta_aspnetcore_mvc_example.Okta;
+using ExampleApp = okta_aspnetcore_mvc_example.Okta;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,14 +21,12 @@ namespace okta_aspnetcore_mvc_example.Controllers
 {
     public class InteractionCodeController : Controller
     {
-        private readonly HttpClient httpClient;
-        private readonly IIdxClient idxClient;
-        private readonly IInteractionRequiredHandler interactionRequiredHandler;
+        private readonly Idx.IIdxClient idxClient;
+        private readonly ExampleApp.IInteractionRequiredHandler interactionRequiredHandler;
         private readonly ILogger<InteractionCodeController> logger;
 
-        public InteractionCodeController(IIdxClient idxClient, IInteractionRequiredHandler interactionRequiredHandler, ILogger<InteractionCodeController> logger)
+        public InteractionCodeController(Idx.IIdxClient idxClient, ExampleApp.IInteractionRequiredHandler interactionRequiredHandler, ILogger<InteractionCodeController> logger)
         {
-            this.httpClient = new HttpClient();
             this.idxClient = idxClient;
             this.interactionRequiredHandler = interactionRequiredHandler;
             this.logger = logger;
@@ -39,7 +38,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
             [FromQuery(Name = "error")] string error = null,
             [FromQuery(Name = "error_description")] string errorDescription = null)
         {
-            IdxContext idxContext = HttpContext.Session.GetIdxContext(state);
+            Idx.IdxContext idxContext = ExampleApp.OktaExtensions.GetIdxContext(HttpContext.Session, state);
 
             if ("interaction_required".Equals(error))
             {
@@ -60,11 +59,11 @@ namespace okta_aspnetcore_mvc_example.Controllers
             return Redirect("/Home/Profile");
         }
 
-        private async Task RedeemInteractionCodeAndSignInAsync(IdxContext idxContext, string interactionCode)
+        private async Task RedeemInteractionCodeAndSignInAsync(Idx.IdxContext idxContext, string interactionCode)
         {
             try
             {
-                TokenResponse tokens = await idxClient.RedeemInteractionCodeAsync(idxContext, interactionCode);
+                Idx.TokenResponse tokens = await idxClient.RedeemInteractionCodeAsync(idxContext, interactionCode);
 
                 if (tokens == null)
                 {
@@ -85,13 +84,26 @@ namespace okta_aspnetcore_mvc_example.Controllers
             }
         }
 
-        private async Task<ClaimsPrincipal> GetClaimsPrincipalAsync(TokenResponse tokens)
-        {
-            UserInfo userInfo = await GetUserInfoAsync(idxClient, tokens.AccessToken);            
+        private async Task<ClaimsPrincipal> GetClaimsPrincipalAsync(Idx.TokenResponse tokens)
+        {           
             ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            identity.AddClaims(userInfo.ToClaims());
+            var claims = await GetClaimsFromUserInfoAsync(tokens.AccessToken);
+            identity.AddClaims(claims);
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
             return principal;
+        }
+
+        private async Task<IEnumerable<Claim>> GetClaimsFromUserInfoAsync(string accessToken)
+        {
+            Uri userInfoUri = new Uri(Idx.IdxUrlHelper.GetNormalizedUriString(idxClient.Configuration.Issuer, "v1/userinfo")) ;
+            HttpClient httpClient = new HttpClient();
+            UserInfoResponse userInfoResponse = await httpClient.GetUserInfoAsync(new UserInfoRequest
+            {
+                Address = userInfoUri.ToString(),
+                Token = accessToken,
+            }).ConfigureAwait(false);
+
+            return userInfoResponse.Claims;
         }
 
         private void HandleException(Exception ex)
@@ -100,19 +112,6 @@ namespace okta_aspnetcore_mvc_example.Controllers
 
             // provide exception handling appropriate to your application
             HttpContext.Response.Redirect("/");
-        }
-
-        private async Task<UserInfo> GetUserInfoAsync(IIdxClient idxClient, string accessToken)
-        {
-            IdxConfiguration idxConfiguration = idxClient.Configuration;
-            Uri issuerUri = new Uri(idxConfiguration.Issuer);
-            Uri userInfoUri = new Uri(IdxUrlHelper.GetNormalizedUriString(issuerUri.ToString(), "v1/userinfo"));
-            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, userInfoUri);
-            requestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
-            HttpResponseMessage responseMessage = await this.httpClient.SendAsync(requestMessage);
-            string userInfoJson = await responseMessage.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<UserInfo>(userInfoJson);
         }
     }
 }

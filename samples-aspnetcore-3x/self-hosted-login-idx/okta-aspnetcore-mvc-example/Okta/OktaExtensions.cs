@@ -13,17 +13,6 @@ namespace okta_aspnetcore_mvc_example.Okta
     {
         public const string IdxStateKey = "IdxStateHandle";
 
-        public static IdxContext GetIdxContext(this HttpContext httpContext)
-        {
-            return GetIdxContext(httpContext.Session);
-        }
-
-        public static IdxContext GetIdxContext(this ISession session)
-        {
-            string stateHandle = session.GetString(IdxStateKey);
-            return GetIdxContext(session, stateHandle);
-        }
-
         public static IdxContext GetIdxContext(this ISession session, string stateHandle)
         {
             string idxContextJson = session.GetString(stateHandle);
