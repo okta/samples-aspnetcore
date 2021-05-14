@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Okta.AspNetCore;
 using Okta.Idx.Sdk;
-using okta_aspnetcore_mvc_example.Okta;
 
 namespace okta_aspnetcore_mvc_example
 {
