@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okta-aspnetcore-mvc-example", "okta-aspnetcore-mvc-example\okta-aspnetcore-mvc-example.csproj", "{916FD7FA-5E6B-452C-B34C-BB2DCBB258CF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.Idx.Sdk", "..\..\submodules\okta-idx-dotnet\src\Okta.Idx.Sdk\Okta.Idx.Sdk.csproj", "{D288EE9A-2029-4C43-B137-0981D7C19E16}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Okta.Idx.Sdk.UnitTests", "..\..\submodules\okta-idx-dotnet\src\Okta.Idx.Sdk.UnitTests\Okta.Idx.Sdk.UnitTests.csproj", "{6003E4D5-B9E2-4D47-AC9A-157A04E26EFE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "embedded-widget", "embedded-widget\embedded-widget.csproj", "{DC78A5AA-D7D4-4E3D-B170-710AE49B1664}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{916FD7FA-5E6B-452C-B34C-BB2DCBB258CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{916FD7FA-5E6B-452C-B34C-BB2DCBB258CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{916FD7FA-5E6B-452C-B34C-BB2DCBB258CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{916FD7FA-5E6B-452C-B34C-BB2DCBB258CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D288EE9A-2029-4C43-B137-0981D7C19E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D288EE9A-2029-4C43-B137-0981D7C19E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D288EE9A-2029-4C43-B137-0981D7C19E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{6003E4D5-B9E2-4D47-AC9A-157A04E26EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6003E4D5-B9E2-4D47-AC9A-157A04E26EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6003E4D5-B9E2-4D47-AC9A-157A04E26EFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC78A5AA-D7D4-4E3D-B170-710AE49B1664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC78A5AA-D7D4-4E3D-B170-710AE49B1664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC78A5AA-D7D4-4E3D-B170-710AE49B1664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC78A5AA-D7D4-4E3D-B170-710AE49B1664}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
