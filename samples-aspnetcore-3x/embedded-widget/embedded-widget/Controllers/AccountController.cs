@@ -17,9 +17,15 @@ namespace okta_aspnetcore_mvc_example.Controllers
             this.idxClient = idxClient;
         }
 
-        public async Task<IActionResult> SignInWidget()
+        [HttpGet]
+        public async Task<IActionResult> SignInWidget([FromQuery]string state = null)
         {
-            SignInWidgetConfiguration signInWidgetConfiguration = await HttpContext.StartWidgetSignInAsync(idxClient);
+            SignInWidgetConfiguration signInWidgetConfiguration = await HttpContext.StartWidgetSignInAsync(idxClient, state);
+            if(string.IsNullOrEmpty(state))
+            {
+                // redirect back to current action with state to allow reload without starting a new idx interaction
+                return Redirect($"/Account/SignInWidget?state={signInWidgetConfiguration.State}");
+            }
             return View(signInWidgetConfiguration);
         }
 

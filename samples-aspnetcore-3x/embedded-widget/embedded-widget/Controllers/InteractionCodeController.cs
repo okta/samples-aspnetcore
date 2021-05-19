@@ -33,7 +33,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
             [FromQuery(Name = "error")] string error = null,
             [FromQuery(Name = "error_description")] string errorDescription = null)
         {
-            Idx.IdxContext idxContext = ExampleApp.OktaExtensions.GetIdxContext(HttpContext.Session, state);
+            Idx.IIdxContext idxContext = ExampleApp.OktaExtensions.GetIdxContext(HttpContext.Session, state);
 
             if ("interaction_required".Equals(error))
             {
@@ -54,7 +54,7 @@ namespace okta_aspnetcore_mvc_example.Controllers
             return Redirect("/Home/Profile");
         }
 
-        private async Task RedeemInteractionCodeAndSignInAsync(Idx.IdxContext idxContext, string interactionCode)
+        private async Task RedeemInteractionCodeAndSignInAsync(Idx.IIdxContext idxContext, string interactionCode)
         {
             try
             {
