@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Okta.Idx.Sdk;
+using Okta.Idx.Sdk.Helpers;
 
 namespace okta_aspnetcore_mvc_example.Controllers
 {
@@ -33,81 +34,35 @@ namespace okta_aspnetcore_mvc_example.Controllers
             [FromQuery(Name = "error")] string error = null,
             [FromQuery(Name = "error_description")] string errorDescription = null)
         {
-            Idx.IIdxContext idxContext = ExampleApp.OktaExtensions.GetIdxContext(HttpContext.Session, state);
-
-            if ("interaction_required".Equals(error))
-            {
-                return View("SignInWidget", new SignInWidgetConfiguration(idxClient.Configuration, idxContext));
-            }
-
-            if (!string.IsNullOrEmpty(error))
-            {
-                return View("Error", new ErrorViewModel { Error = error, ErrorDescription = errorDescription });
-            }
-
-            if (string.IsNullOrEmpty(interactionCode))
-            {
-                return View("Error", new ErrorViewModel { Error = "null_interaction_code", ErrorDescription = "interaction_code was not specified" });
-            }
-
-            await RedeemInteractionCodeAndSignInAsync(idxContext, interactionCode);
-            return Redirect("/Home/Profile");
-        }
-
-        private async Task RedeemInteractionCodeAndSignInAsync(Idx.IIdxContext idxContext, string interactionCode)
-        {
             try
             {
-                Idx.TokenResponse tokens = await idxClient.RedeemInteractionCodeAsync(idxContext, interactionCode);
+                Idx.IIdxContext idxContext = ExampleApp.OktaExtensions.GetIdxContext(HttpContext.Session, state);
 
-                if (tokens == null)
+                if ("interaction_required".Equals(error))
                 {
-                    // if the tokens object is null, our exception handler (HandleException) should have executed.
-                    // The line below is included for completeness.
-                    HttpContext.Response.Redirect("/");
+                    return View("SignInWidget", new SignInWidgetConfiguration(idxClient.Configuration, idxContext));
                 }
-                else
+
+                if (!string.IsNullOrEmpty(error))
                 {
-                    ClaimsPrincipal principal = await GetClaimsPrincipalAsync(tokens);
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                    return View("Error", new ErrorViewModel { Error = error, ErrorDescription = errorDescription });
                 }
+
+                if (string.IsNullOrEmpty(interactionCode))
+                {
+                    return View("Error", new ErrorViewModel { Error = "null_interaction_code", ErrorDescription = "interaction_code was not specified" });
+                }
+
+                Idx.TokenResponse tokens = await idxClient.RedeemInteractionCodeAsync(idxContext, interactionCode);
+                ClaimsPrincipal principal = await AuthenticationHelper.GetPrincipalFromTokenResponseAsync(idxClient.Configuration, tokens);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                return Redirect("/Home/Profile");
             }
             catch (Exception ex)
             {
-                HandleException(ex);
-                HttpContext.Response.Redirect("/");
+                logger.LogError(ex.Message);
+                return View("Error", new ErrorViewModel { Error = ex.GetType().Name, ErrorDescription = ex.Message });
             }
-        }
-
-        private async Task<ClaimsPrincipal> GetClaimsPrincipalAsync(Idx.TokenResponse tokens)
-        {           
-            ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            var claims = await GetClaimsFromUserInfoAsync(tokens.AccessToken);
-            identity.AddClaims(claims);
-            identity.AddClaim(new Claim("access_token", tokens.AccessToken));
-            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-            return principal;
-        }
-
-        private async Task<IEnumerable<Claim>> GetClaimsFromUserInfoAsync(string accessToken)
-        {
-            Uri userInfoUri = new Uri(Idx.IdxUrlHelper.GetNormalizedUriString(idxClient.Configuration.Issuer, "v1/userinfo")) ;
-            HttpClient httpClient = new HttpClient();
-            UserInfoResponse userInfoResponse = await httpClient.GetUserInfoAsync(new UserInfoRequest
-            {
-                Address = userInfoUri.ToString(),
-                Token = accessToken,
-            }).ConfigureAwait(false);
-
-            return userInfoResponse.Claims;
-        }
-
-        private void HandleException(Exception ex)
-        {
-            logger.LogError(ex, ex.Message);
-
-            // provide exception handling appropriate to your application
-            HttpContext.Response.Redirect("/");
         }
     }
 }
