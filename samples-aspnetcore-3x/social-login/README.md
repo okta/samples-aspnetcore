@@ -69,6 +69,6 @@ You can sign in with the same account that you created when signing up for your 
 [OIDC Web Application Setup Instructions]: https://developer.okta.com/authentication-guide/implementing-authentication/auth-code#1-setting-up-your-application
 [Enforce HTTPS in ASP.NET Core]: https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-2.2&tabs=visual-studio
 [Configuring HTTPS in ASP.NET Core across different platforms]:https://devblogs.microsoft.com/aspnet/configuring-https-in-asp-net-core-across-different-platforms/
-[Sign Users in to Your Web Application guide]: https://developer.okta.com/guides/sign-into-web-app/aspnet/before-you-begin/
-[Sign Users Out guide]: https://developer.okta.com/guides/sign-users-out/aspnetcore/before-you-begin/
+[Sign Users in to Your Web Application guide]: https://developer.okta.com/docs/guides/sign-into-web-app-redirect/asp-net-core-3/main/
+[Sign Users Out guide]: https://developer.okta.com/docs/guides/sign-users-out/aspnetcore3/main/
 [Okta Developer Console]: https://login.okta.com

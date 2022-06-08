@@ -46,7 +46,6 @@ You can browse to `http://localhost:8000/api/messages` to ensure it has started.
 
 Replace the okta configuration placeholders in the `appsettings.json` with your configuration values from the [Okta Developer Console]. 
 You can see all the available configuration options in the [okta-aspnet GitHub](https://github.com/okta/okta-aspnet/blob/master/docs/aspnetcore-webapi.md#configuration-reference).
-For step-by-step instructions, visit the Okta [Protect your API endpoints guide]. The guide will walk you through adding Okta authentication to your API endpoints.
 
 ### Front-end
 
