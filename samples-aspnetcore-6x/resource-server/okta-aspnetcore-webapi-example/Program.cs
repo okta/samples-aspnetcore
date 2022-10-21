@@ -46,20 +46,23 @@ app.UseAuthorization();
 app.UseCors();
 app.UseHttpsRedirection();
 
-app.MapGet("/api/whoami", [Authorize] (HttpContext HttpContext) =>
+app.MapGet("/api/messages", [Authorize] (HttpContext HttpContext) =>
 {
     var principal = HttpContext.User.Identity as ClaimsIdentity;
-    return principal?.Claims
-        .GroupBy(claim => claim.Type)
-        .ToDictionary(claim => claim.Key, claim => claim.First().Value);
-})
-.WithName("WhoAmi");
 
-app.MapGet("/api/hello", [AllowAnonymous] () =>
-{
-    return "You are annonymous";
-})
-.WithName("Hello");
+    var login = principal?.Claims
+        .SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
+        ?.Value;
 
+    return new
+    {
+        messages = new dynamic[]
+        {
+                    new { Date = DateTime.Now, Text = "I am a Robot." },
+                    new { Date = DateTime.Now, Text = "Hello, world!" },
+        },
+    };
+})
+.WithName("Messages");
 
 app.Run();

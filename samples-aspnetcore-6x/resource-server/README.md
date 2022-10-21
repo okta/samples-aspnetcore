@@ -25,22 +25,22 @@ A typical resource-server requires a frontend and a backend application, so you 
 
 Run the example with your preferred tool and write down the port of your Web API application to configure Okta afterwards.
 
-> **NOTE:** Although we highly recommend using HTTPS in production, we are using HTTP here to be compatible with our [SPA samples](#Prerequisites) that expect a protected endpoint on HTTP://localhost:7064/api/whoami. 
+> **NOTE:** Although we highly recommend using HTTPS in production, we are using HTTP here to be compatible with our [SPA samples](#Prerequisites) that expect a protected endpoint on HTTP://localhost:8000/api/messages. 
 
 #### Run the Web API application from Visual Studio
 
-If you run this project in Visual Studio it will start the resource server on port 7064 using HTTP. You can change this configuration in the `launchSettings.json` in the Properties folder.  
-You can browse to `http://localhost:7064/api/hello` to ensure it has started. You will see the message "You are anonymous". When you browse to `http://localhost:7064/api/whoami` you will get a 401 HTTP response.  An access token is needed to access the protected resource which is acquired by the front-end, see [Front-end](#front-end).
+If you run this project in Visual Studio it will start the resource server on port 8000 using HTTP. You can change this configuration in the `launchSettings.json` in the Properties folder.  
+You can browse to `http://localhost:8000/api/messages` to ensure it has started. If you get a 401 HTTP error, it indicates that the resource server is up. You will need to pass an access token to access the resource, which will be done by the front-end below.
 
 #### Run the Web API application from dotnet CLI
 
-If you run this project via the dotnet CLI it will start the resource server on port 7064 using HTTP. You can change this configuration in the `launchSettings.json` in the Properties folder.
+If you run this project via the dotnet CLI it will start the resource server on port 8000 using HTTP. You can change this configuration in the `launchSettings.json` in the Properties folder.
 
 Navigate to the folder where the project file is located and type the following:
 
 ```dotnet run```
 
-You can browse to `http://localhost:7064/api/hello` to ensure it has started. You will see the message "You are anonymous". When you browse to `http://localhost:7064/api/whoami` you will get a 401 HTTP response.  An access token is needed to access the protected resource which is acquired by the front-end, , see [Front-end](#front-end).
+You can browse to `http://localhost:8000/api/messages` to ensure it has started. If you get a 401 HTTP error, it indicates that the resource server is up. You will need to pass an access token to access the resource, which will be done by the front-end below.
 
 ### Add your Okta configuration to the sample's appsettings
 
