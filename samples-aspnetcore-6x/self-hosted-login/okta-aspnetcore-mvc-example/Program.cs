@@ -26,7 +26,6 @@ builder.Services.AddAuthentication(options =>
         AuthorizationServerId = builder.Configuration.GetValue<string>("Okta:AuthorizationServerId"),
         Scope = new List<string> { "openid", "profile", "email" },
     });
-builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 

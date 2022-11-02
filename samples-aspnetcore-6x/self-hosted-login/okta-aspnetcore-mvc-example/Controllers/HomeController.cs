@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using okta_aspnetcore_mvc_example.Models;
 using System.Diagnostics;
 
@@ -27,6 +28,12 @@ namespace okta_aspnetcore_mvc_example.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public IActionResult Profile()
+        {
+            return View(HttpContext.User.Claims);
         }
     }
 }
