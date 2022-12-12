@@ -9,3 +9,7 @@ jobs:
       - checkout
 
 # VS Code Extension Version: 1.4.0
+workflows:
+  test:
+    jobs:
+      - test
