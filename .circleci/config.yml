@@ -5,7 +5,7 @@ jobs:
     description: Setup and run application tests
     executor:
       name: windows/default
-      steps:
+    steps:
       - checkout
 
 # VS Code Extension Version: 1.4.0
