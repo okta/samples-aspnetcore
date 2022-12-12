@@ -1,0 +1,11 @@
+version: 2.1
+
+jobs:
+  test:
+    description: Setup and run application tests
+    executor:
+      name: windows/default
+      steps:
+      - checkout
+
+# VS Code Extension Version: 1.4.0
