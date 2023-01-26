@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>okta_aspnetcore_mvc_example</RootNamespace>
+    <RootNamespace>okta_aspnetcore_razorpages_example</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
