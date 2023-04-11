@@ -1,0 +1,3 @@
+[submodule "submodules/okta-visualstudio-wizard"]
+	path = submodules/okta-visualstudio-wizard
+	url = git@github.com:okta/okta-visualstudio-wizard.git
