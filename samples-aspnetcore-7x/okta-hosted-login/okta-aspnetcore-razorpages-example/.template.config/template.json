@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Bryan Apellanes",
+    "sourceName": "okta_aspnetcore_razorpages_example",
+    "description": "Razor Pages with Okta authentication",
+    "classifications": ["Webapp","Web"],
+    "identity": "Okta.Razor.Pages",
+    "name": "Okta Razor Pages",
+    "shortName": "oktarazorpages",
+    "defaultName": "OktaRazorPages",
+    "tags": {
+        "type": "project",
+        "language": "C#"
+    },
+    "postActions": [
+        {
+            "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+            "args": {
+
+            },
+            "description": "Run Okta Wizard",
+            "manualInstructions": [
+                {
+                    "text": "Run okta.exe -projectDirectory {pathToNewProject}"
+                }
+            ],            
+            "continueOnError": true
+        }
+    ]  
+}
