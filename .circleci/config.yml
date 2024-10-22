@@ -14,9 +14,37 @@ jobs:
       - run: dotnet --version
 
       - run: 
-          name: build Binary to scan
-          command: dotnet build ./src/Okta.Sdk.sln
+          name: build okta-hosted-login v3 to scan
+          command: dotnet build ./samples-aspnetcore-3x/okta-hosted-login/okta-aspnetcore-mvc-example.sln
        
+      - run: 
+          name: build resource-server v3 to scan
+          command: dotnet build ./samples-aspnetcore-3x/resource-server/okta-aspnetcore-webapi-example.sln 
+
+      - run: 
+          name: build self-hosted-login v3 to scan
+          command: dotnet build ./samples-aspnetcore-3x/self-hosted-login/okta-aspnetcore-mvc-example.sln
+
+      - run: 
+          name: build social-login v3 to scan
+          command: dotnet build ./samples-aspnetcore-3x/social-login/okta-aspnetcore-mvc-example.sln
+     
+      - run: 
+          name: build resource-server v6 to scan
+          command: dotnet build ./samples-aspnetcore-6x/resource-server/okta-aspnetcore-webapi-example.sln 
+  
+      - run: 
+          name: build self-hosted-login v6 to scan
+          command: dotnet build ./samples-aspnetcore-6x/self-hosted-login/okta-aspnetcore-mvc-example.sln
+
+      - run: 
+          name: build okta-hosted-login v7 to scan
+          command: dotnet build ./samples-aspnetcore-7x/okta-hosted-login/okta-aspnetcore-razorpages-example/okta-aspnetcore-razorpages-example.sln
+        
+      - run: 
+          name: build self-hosted-login v7 to scan
+          command: dotnet build ./samples-aspnetcore-7x/self-hosted-login/okta-aspnetcore-razorpages-example/okta-aspnetcore-razorpages-example.sln
+          
       // Necessary to Install rl wrapper   
       - run:
           name: Install Python
