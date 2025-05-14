@@ -1,5 +1,11 @@
 # ASP.NET Core Sample Applications for Okta
-
+> **⚠️ Archived Repository Notice**
+>
+> This repository is no longer maintained and has been archived by Okta.  
+> No further updates, fixes, or support will be provided.  
+> For current solutions and actively maintained projects, please visit [https://github.com/okta](https://github.com/okta).
+>
+>
 This repository contains several sample applications that show you how to integrate various Okta use-cases into your ASP.NET Core applications.
 
 Please find the sample that fits your use-case from the table below.
